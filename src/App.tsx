@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   MessageSquare, 
   Mic, 
@@ -6,11 +6,7 @@ import {
   Mail, 
   Moon, 
   FileText, 
-  CheckCircle,
-  ExternalLink,
-  Layers,
-  ChevronLeft,
-  ChevronRight
+  ExternalLink
 } from 'lucide-react';
 import { AIProvider, SlothMode, SlothStats } from './types';
 import { Header } from './components/Header';
@@ -38,31 +34,6 @@ export const App: React.FC = () => {
     chillLevel: 94
   });
 
-  const navContainerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-
-  const checkScroll = () => {
-    const el = navContainerRef.current;
-    if (el) {
-      setCanScrollLeft(el.scrollLeft > 6);
-      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 6);
-    }
-  };
-
-  useEffect(() => {
-    checkScroll();
-    window.addEventListener('resize', checkScroll);
-    return () => window.removeEventListener('resize', checkScroll);
-  }, []);
-
-  const scrollNav = (direction: 'left' | 'right') => {
-    const el = navContainerRef.current;
-    if (el) {
-      el.scrollBy({ left: direction === 'left' ? -180 : 180, behavior: 'smooth' });
-    }
-  };
-
   const handleEffortSaved = (minutes: number, calories: number) => {
     setStats((prev) => ({
       timeSavedMinutes: prev.timeSavedMinutes + minutes,
@@ -78,56 +49,38 @@ export const App: React.FC = () => {
     {
       id: 'chat-tidier' as SlothMode,
       num: '01',
-      label: 'Chat & Inbox Tidier',
-      shortLabel: 'Chat Tidier',
-      icon: MessageSquare,
-      badge: 'CLARITY',
-      badgeColor: 'bg-[#1b2820] text-[#8edba6] border-[#294232]'
+      label: 'Chat Tidier',
+      icon: MessageSquare
     },
     {
       id: 'voice-ramble' as SlothMode,
-      label: 'Lazy Voice Ramble',
-      shortLabel: 'Voice Ramble',
       num: '02',
-      icon: Mic,
-      badge: 'AUDIO',
-      badgeColor: 'bg-[#182326] text-[#88c9d4] border-[#263e42]'
+      label: 'Voice Ramble',
+      icon: Mic
     },
     {
       id: 'fridge-chef' as SlothMode,
-      label: 'Fridge-to-Feast',
-      shortLabel: 'Fridge Chef',
       num: '03',
-      icon: Utensils,
-      badge: '10 MIN',
-      badgeColor: 'bg-[#271f16] text-[#deb992] border-[#3d2e1f]'
+      label: 'Fridge Chef',
+      icon: Utensils
     },
     {
       id: 'dreaded-reply' as SlothMode,
-      label: 'Procrastination Breaker',
-      shortLabel: 'Dreaded Reply',
       num: '04',
-      icon: Mail,
-      badge: 'ANTIDOTE',
-      badgeColor: 'bg-[#231b2e] text-[#cbbfe8] border-[#382b4c]'
+      label: 'Dreaded Reply',
+      icon: Mail
     },
     {
       id: 'wind-down' as SlothMode,
-      label: 'Wind-Down & Snooze',
-      shortLabel: 'Wind-Down',
       num: '05',
-      icon: Moon,
-      badge: 'OFFLINE',
-      badgeColor: 'bg-[#182320] text-[#8ec7b3] border-[#263b36]'
+      label: 'Wind-Down',
+      icon: Moon
     },
     {
       id: 'why-open' as SlothMode,
-      label: 'Why Open AI Matters',
-      shortLabel: 'Why Open AI',
       num: '06',
-      icon: FileText,
-      badge: 'MANIFESTO',
-      badgeColor: 'bg-[#1c221e] text-[#9aa8a0] border-[#29362f]'
+      label: 'Why Open AI',
+      icon: FileText
     }
   ];
 
@@ -150,68 +103,30 @@ export const App: React.FC = () => {
           onPoked={() => handleEffortSaved(5, 10)}
         />
 
-        {/* Tab Navigation Segmented Bar - Precision Responsive Tool Switcher */}
-        <div className="relative group">
-          {/* Scroll Nav Controls (Visible on smaller viewports when scrollable) */}
-          {canScrollLeft && (
-            <button
-              onClick={() => scrollNav('left')}
-              className="absolute left-1 top-1/2 -translate-y-1/2 z-20 md:hidden w-7 h-7 rounded-lg bg-[#141916]/95 border border-[#2b3a30] text-[#8edba6] flex items-center justify-center shadow-lg hover:bg-[#1d2621] transition-colors"
-              title="Scroll left"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-          )}
-
-          {canScrollRight && (
-            <button
-              onClick={() => scrollNav('right')}
-              className="absolute right-1 top-1/2 -translate-y-1/2 z-20 md:hidden w-7 h-7 rounded-lg bg-[#141916]/95 border border-[#2b3a30] text-[#8edba6] flex items-center justify-center shadow-lg hover:bg-[#1d2621] transition-colors"
-              title="Scroll right"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          )}
-
-          {/* Nav Track: Grid across screens >= 768px (Zero overflow/clipping); Smooth swipe on mobile */}
-          <div
-            ref={navContainerRef}
-            onScroll={checkScroll}
-            className="p-1 sm:p-1.5 rounded-xl bg-[#141916] border border-[#222b26] flex md:grid md:grid-cols-6 items-center gap-1 sm:gap-1.5 overflow-x-auto md:overflow-x-visible scrollbar-none shadow-sm overscroll-x-contain"
-          >
-            {navItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeTab === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={(e) => {
-                    setActiveTab(item.id);
-                    e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                  }}
-                  className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-lg text-xs font-mono font-medium whitespace-nowrap transition-colors tactile-btn cursor-pointer shrink-0 md:shrink md:w-full ${
-                    isActive
-                      ? 'bg-[#1d2621] text-[#edf2ee] border border-[#314237]'
-                      : 'text-[#84948b] hover:text-[#edf2ee] hover:bg-[#181f1b] border border-transparent'
-                  }`}
-                >
-                  <span className="text-[9px] sm:text-[10px] text-[#4d5f55] font-mono">{item.num}</span>
-                  <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#4eb374]' : 'text-[#6c7d74]'}`} />
-                  <span className="hidden xl:inline">{item.label}</span>
-                  <span className="inline xl:hidden">{item.shortLabel}</span>
-                  {item.badge && (
-                    <span className={`text-[8px] sm:text-[9px] px-1 sm:px-1.5 py-0.2 rounded font-mono border hidden xl:inline ${
-                      isActive 
-                        ? item.badgeColor 
-                        : 'bg-[#18201c] text-[#6c7d74] border-[#222c26]'
-                    }`}>
-                      {item.badge}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
+        {/* Tab Navigation Segmented Bar - Precision Collision-Free Tool Switcher */}
+        <div className="p-1 sm:p-1.5 rounded-xl bg-[#141916] border border-[#222b26] flex items-center gap-1 sm:gap-1.5 overflow-x-auto scrollbar-none shadow-sm overscroll-x-contain">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={(e) => {
+                  setActiveTab(item.id);
+                  e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }}
+                className={`flex-1 min-w-fit flex items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-xs font-mono font-medium whitespace-nowrap transition-colors tactile-btn cursor-pointer ${
+                  isActive
+                    ? 'bg-[#1d2621] text-[#edf2ee] border border-[#314237]'
+                    : 'text-[#84948b] hover:text-[#edf2ee] hover:bg-[#181f1b] border border-transparent'
+                }`}
+              >
+                <span className="text-[10px] text-[#4d5f55] font-mono shrink-0">{item.num}</span>
+                <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#4eb374]' : 'text-[#6c7d74]'}`} />
+                <span>{item.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         {/* Active Tool View */}
