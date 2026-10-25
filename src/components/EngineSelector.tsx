@@ -63,24 +63,24 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
   };
 
   return (
-    <div className="relative bg-[#141916] border border-[#222b26] p-5 sm:p-7 max-w-2xl w-full mx-auto shadow-2xl">
-      <span className="absolute -top-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
-      <span className="absolute -top-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
-      <span className="absolute -bottom-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
-      <span className="absolute -bottom-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+    <div className="relative bg-[#141916] border border-[#222b26] rounded-xl sm:rounded-none p-4 sm:p-7 max-w-2xl w-full mx-auto shadow-2xl max-h-[90vh] overflow-y-auto scrollbar-thin">
+      <span className="hidden sm:inline absolute -top-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+      <span className="hidden sm:inline absolute -top-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+      <span className="hidden sm:inline absolute -bottom-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+      <span className="hidden sm:inline absolute -bottom-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
 
-      <div className="flex items-center justify-between pb-3.5 border-b border-[#1f2722] mb-5">
-        <div className="flex items-center gap-2.5">
+      <div className="flex items-center justify-between pb-3 sm:pb-3.5 border-b border-[#1f2722] mb-4 sm:mb-5">
+        <div className="flex items-center gap-2 sm:gap-2.5">
           <div className="p-1.5 rounded bg-[#101413] text-[#55b376] border border-[#222b26]">
             <Cpu className="w-4 h-4" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-1.5 py-0.5 rounded bg-[#101413] border border-[#222b26] text-[10px] font-mono text-[#62776c]">
+              <span className="px-1.5 py-0.5 rounded bg-[#101413] border border-[#222b26] text-[9px] sm:text-[10px] font-mono text-[#62776c]">
                 SYSTEM // ENGINE_ROUTER
               </span>
             </div>
-            <h2 className="font-serif-letterpress text-base sm:text-lg font-normal text-[#f0f3f1] mt-0.5">
+            <h2 className="font-serif-letterpress text-sm sm:text-lg font-normal text-[#f0f3f1] mt-0.5">
               Select Open-Source AI Backend
             </h2>
           </div>

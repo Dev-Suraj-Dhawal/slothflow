@@ -64,22 +64,22 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[410px] bg-[#141916] border border-[#222b26] p-4 sm:p-5 shadow-2xl animate-fade-in relative">
-      <span className="absolute -top-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
-      <span className="absolute -top-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
-      <span className="absolute -bottom-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
-      <span className="absolute -bottom-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+    <div className="fixed bottom-2 left-2 right-2 sm:left-auto sm:bottom-4 sm:right-6 z-50 sm:w-[410px] max-h-[88vh] overflow-y-auto bg-[#141916] border border-[#222b26] rounded-xl sm:rounded-none p-3.5 sm:p-5 shadow-2xl animate-fade-in relative">
+      <span className="hidden sm:inline absolute -top-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+      <span className="hidden sm:inline absolute -top-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+      <span className="hidden sm:inline absolute -bottom-1 -left-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
+      <span className="hidden sm:inline absolute -bottom-1 -right-1 text-[9px] font-mono text-[#38483f] select-none">+</span>
 
-      <div className="flex items-center justify-between pb-3 border-b border-[#1f2722] mb-3">
+      <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-[#1f2722] mb-3">
         <div className="flex items-center gap-2">
-          <span className="px-1.5 py-0.5 rounded bg-[#101413] border border-[#222b26] text-[10px] font-mono text-[#55b376]">
+          <span className="px-1.5 py-0.5 rounded bg-[#101413] border border-[#222b26] text-[9px] sm:text-[10px] font-mono text-[#55b376]">
             [SYNTH // 0528Hz]
           </span>
           <div>
             <h3 className="text-xs font-mono font-bold text-[#f0f3f1] tracking-wide uppercase">
               Procedural Soundscape
             </h3>
-            <p className="text-[10px] text-[#62776c] font-mono">
+            <p className="text-[9px] sm:text-[10px] text-[#62776c] font-mono">
               Web Audio API · 0 MP3s · Algorithmic
             </p>
           </div>
