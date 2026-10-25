@@ -142,6 +142,65 @@
 .vu-bar-4 { animation: vu-meter-tick 0.9s ease-in-out infinite 0.1s; }
 .vu-bar-5 { animation: vu-meter-tick 1.2s ease-in-out infinite 0.25s; }
 
+/* Custom Precision Hardware Synth Slider */
+input[type="range"].synth-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+}
+
+input[type="range"].synth-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+input[type="range"].synth-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: transparent;
+}
+
+input[type="range"].synth-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #edf2ee;
+  border: 2px solid #141916;
+  margin-top: -4px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+input[type="range"].synth-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+  background: #ffffff;
+}
+
+input[type="range"].synth-slider:active::-webkit-slider-thumb {
+  transform: scale(1.25);
+}
+
+input[type="range"].synth-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #edf2ee;
+  border: 2px solid #141916;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+input[type="range"].synth-slider:hover::-moz-range-thumb {
+  transform: scale(1.15);
+  background: #ffffff;
+}
+
 /* Custom Sleek Matte Scrollbar */
 ::-webkit-scrollbar {
   width: 5px;
