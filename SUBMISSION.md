@@ -27,6 +27,12 @@ Who gets to be lazy? **Everyone.** Students, tired developers, parents, and anyo
 - **Live Application**: [https://slothflow-six.vercel.app](https://slothflow-six.vercel.app)
 - **GitHub Repository**: [https://github.com/Dev-Suraj-Dhawal/slothflow](https://github.com/Dev-Suraj-Dhawal/slothflow)
 
+### 🖥️ Main Dashboard & Sloan Field Log
+![SlothFlow AI Dashboard](https://raw.githubusercontent.com/Dev-Suraj-Dhawal/slothflow/main/home.png)
+
+### 🎛️ Live Workspace & Procedural Soundscape Synth
+![Procedural Soundscape Synthesizer](https://raw.githubusercontent.com/Dev-Suraj-Dhawal/slothflow/main/function.png)
+
 ---
 
 ## Code
@@ -36,6 +42,9 @@ Who gets to be lazy? **Everyone.** Students, tired developers, parents, and anyo
 ---
 
 ## How I Built It
+
+### 🔌 Multi-Engine Open Inference Architecture
+![Open-Source AI Backend Engine Router](https://raw.githubusercontent.com/Dev-Suraj-Dhawal/slothflow/main/models.png)
 
 SlothFlow AI is built entirely around **open-weight models and local inference architectures**:
 

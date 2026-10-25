@@ -22,6 +22,22 @@ It exists for one simple purpose: **to eliminate dreaded micro-tasks so you can 
 
 ---
 
+## 📸 Interface & Architecture Tour
+
+### 1. Main Dashboard & Energy Telemetry
+Clean cyber-terminal UI featuring live energy telemetry (effort saved, calories stored, 0 KB egress), Sloan mascot field log, and the **Chaos to 2-Line Clarity** group chat tidier.
+![SlothFlow Dashboard & Sloan Field Log](./home.png)
+
+### 2. Live Workspace & Procedural Soundscape Synth
+Algorithmic soundscape generator built directly on the Web Audio API (Rain, Thunder, Forest Canopy, Brown Noise) with real-time LED meters and a Solfeggio 528Hz vagal parasympathetic resonator.
+![SlothFlow Procedural Audio Synth](./function.png)
+
+### 3. Open-Source Multi-Engine Inference Router
+Unified router allowing users to toggle between In-Browser WebGPU (Transformers.js v3 + ONNX Runtime), Local Desktop (Ollama daemon on `localhost:11434`), Distilled Heuristics (50ms), and Hugging Face Hub API.
+![Open-Source AI Engine Router](./models.png)
+
+---
+
 ## 🦥 Core Features (The Laziness Suite)
 
 ### 1. 📱 Chaos to 2-Line Clarity (Chat & Inbox Tidier)
