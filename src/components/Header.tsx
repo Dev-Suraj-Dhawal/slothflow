@@ -75,38 +75,38 @@ export const Header: React.FC<HeaderProps> = ({
   const badge = getProviderBadge();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#222b26] bg-[#141916] px-4 sm:px-8 py-2.5">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-40 border-b border-[#222b26] bg-[#141916]/95 backdrop-blur-md px-3 sm:px-6 md:px-8 py-2 sm:py-2.5">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
         {/* Brand & Technical Schema */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           <button 
             onClick={onOpenEngineModal}
-            className="w-9 h-9 rounded-lg bg-[#1b221e] border border-[#2c3832] flex items-center justify-center text-lg hover:bg-[#232c27] hover:border-[#38473f] transition-all tactile-btn cursor-pointer select-none"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-[#1b221e] border border-[#2c3832] flex items-center justify-center text-base sm:text-lg hover:bg-[#232c27] hover:border-[#38473f] transition-all tactile-btn cursor-pointer select-none shrink-0"
             title="Inspect Machine Engine & Schema"
           >
             🦥
           </button>
 
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] text-[#556960] tracking-widest uppercase">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="font-mono text-[9px] sm:text-[10px] text-[#556960] tracking-widest uppercase hidden xs:inline">
                 SPEC // OS-03
               </span>
-              <span className="w-1 h-1 rounded-full bg-[#36493f]" />
+              <span className="w-1 h-1 rounded-full bg-[#36493f] hidden xs:inline" />
               <h1 className="text-sm sm:text-base font-bold tracking-tight text-[#edf2ee] flex items-center gap-1.5 font-sans">
                 SlothFlow
-                <span className="font-mono text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#1c2820] text-[#8edba6] border border-[#2b4033]">
+                <span className="font-mono text-[8px] sm:text-[9px] font-bold px-1.5 py-0.2 rounded bg-[#1c2820] text-[#8edba6] border border-[#2b4033]">
                   v1.0
                 </span>
               </h1>
             </div>
-            <p className="text-[10px] font-mono text-[#76877e] tracking-tight">
+            <p className="text-[9px] sm:text-[10px] font-mono text-[#76877e] tracking-tight truncate hidden sm:block">
               AUTONOMOUS ANTI-EFFORT FRAMEWORK · INTERNATIONAL SLOTH DAY
             </p>
           </div>
         </div>
 
-        {/* Center: Analog Laboratory Telemetry */}
+        {/* Center: Analog Laboratory Telemetry (Desktop) */}
         <div className="hidden lg:flex items-center gap-4 bg-[#101412] border border-[#202924] rounded-lg px-4 py-1 text-xs text-[#9aa8a0] font-mono">
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#4eb374]" />
@@ -125,15 +125,23 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
+        {/* Compact Mobile Telemetry Pill (Mobile/Tablet) */}
+        <div className="flex lg:hidden items-center gap-1 px-2 py-1 rounded bg-[#101413] border border-[#202924] text-[10px] font-mono text-[#8edba6]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#4eb374] animate-pulse" />
+          <span className="tabular-nums font-bold">{stats.timeSavedMinutes}m</span>
+          <span className="text-[#5f7368] hidden xs:inline">saved</span>
+        </div>
+
         {/* Right side controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Active Provider Selector Button */}
           <button
             onClick={onOpenEngineModal}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors tactile-btn cursor-pointer ${badge.bg} ${badge.border} ${badge.text}`}
+            className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors tactile-btn cursor-pointer ${badge.bg} ${badge.border} ${badge.text}`}
             title="Inspect Machine Engine & Schema"
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${badge.led} animate-led-blink`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${badge.led} animate-led-blink shrink-0`} />
+            <span className="sm:hidden text-[10px] font-bold">[{badge.code.split('/')[0]}]</span>
             <div className="text-left hidden sm:block">
               <div className="text-[10px] font-bold tracking-wider leading-tight">[{badge.code}]</div>
               <div className="text-[8px] text-[#718279] tracking-tight leading-none">{badge.tech}</div>
@@ -144,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Ambient Procedural Soundscape Toggle */}
           <button
             onClick={onToggleSoundBar}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors tactile-btn cursor-pointer ${
+            className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg border text-xs font-mono transition-colors tactile-btn cursor-pointer ${
               isSoundActive 
                 ? 'bg-[#18261e] text-[#8edba6] border-[#294232]' 
                 : 'bg-[#19201c] text-[#7d8e85] border-[#26312a] hover:text-[#edf2ee] hover:bg-[#202924]'
@@ -169,7 +177,7 @@ export const Header: React.FC<HeaderProps> = ({
             href="https://github.com/Dev-Suraj-Dhawal/slothflow"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#26312a] bg-[#19201c] text-[#9aa8a0] hover:text-[#edf2ee] hover:bg-[#202924] text-xs font-mono transition-colors tactile-btn"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg border border-[#26312a] bg-[#19201c] text-[#9aa8a0] hover:text-[#edf2ee] hover:bg-[#202924] text-xs font-mono transition-colors tactile-btn"
             title="Source Code & Schema"
           >
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
