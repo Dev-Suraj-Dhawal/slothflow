@@ -24,7 +24,7 @@ Who gets to be lazy? **Everyone.** Students, tired developers, parents, and anyo
 
 ## Demo
 
-- **Live Application**: [https://slothflow.vercel.app](https://slothflow.vercel.app) *(or deploy via Vercel)*
+- **Live Application**: [https://slothflow-six.vercel.app](https://slothflow-six.vercel.app)
 - **GitHub Repository**: [https://github.com/Dev-Suraj-Dhawal/slothflow](https://github.com/Dev-Suraj-Dhawal/slothflow)
 
 ---

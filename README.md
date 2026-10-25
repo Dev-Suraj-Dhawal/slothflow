@@ -1,11 +1,14 @@
 # 🦥 SlothFlow AI — Slow & Steady Open-Source AI That Rewards Laziness
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-slothflow--six.vercel.app-000000.svg?logo=vercel&logoColor=white)](https://slothflow-six.vercel.app)
 [![Hacktoberfest 2026](https://img.shields.io/badge/Hacktoberfest-2026%20Open--Source%20AI%20Challenge-orange.svg)](https://dev.to/challenges/hacktoberfest-week3-2026-10-19)
 [![License: MIT](https://img.shields.io/badge/License-MIT-emerald.svg)](https://opensource.org/licenses/MIT)
 [![Theme: Slow and Steady](https://img.shields.io/badge/Theme-Slow%20%26%20Steady%20(Sloth%20Day)-teal.svg)](#)
 [![Client-Side Privacy](https://img.shields.io/badge/Privacy-100%25%20In--Browser%20WebGPU-cyan.svg)](#)
 [![Inference Cost](https://img.shields.io/badge/Cost-%240%20Forever-success.svg)](#)
 
+> 🚀 **Live Demo:** [https://slothflow-six.vercel.app](https://slothflow-six.vercel.app)
+>
 > **"Channel your inner sloth. Build something with open-source AI that does the work so you don't have to."**
 > Built in honor of **International Sloth Day** and **Sloan the Sloth** (DEV's mascot).
 
@@ -130,7 +133,9 @@ npm run preview
 
 ---
 
-## 🌐 Deploy to Vercel
+## 🌐 Live Demo & Deployment
+
+- **Live Demo:** [https://slothflow-six.vercel.app](https://slothflow-six.vercel.app)
 
 SlothFlow AI is 100% static client-side ready and includes `vercel.json` optimized with Cross-Origin headers for WebGPU and WebAssembly.
 
