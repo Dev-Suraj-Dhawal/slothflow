@@ -7,7 +7,8 @@ import {
   Moon, 
   FileText, 
   CheckCircle,
-  ExternalLink
+  ExternalLink,
+  Layers
 } from 'lucide-react';
 import { AIProvider, SlothMode, SlothStats } from './types';
 import { Header } from './components/Header';
@@ -42,57 +43,63 @@ export const App: React.FC = () => {
       tasksEliminated: prev.tasksEliminated + 1,
       chillLevel: Math.min(100, prev.chillLevel + 2)
     }));
-    setMascotStatus(`Conserved ${minutes}m of effort`);
+    setMascotStatus(`CONSERVED ${minutes}M`);
     setTimeout(() => setMascotStatus(''), 4500);
   };
 
   const navItems = [
     {
       id: 'chat-tidier' as SlothMode,
+      num: '01',
       label: 'Chat & Inbox Tidier',
       icon: MessageSquare,
-      badge: 'Popular',
-      badgeColor: 'bg-[#1e2d24] text-[#9ed4b0] border-[#2e4738]'
+      badge: 'CLARITY',
+      badgeColor: 'bg-[#1b2820] text-[#8edba6] border-[#294232]'
     },
     {
       id: 'voice-ramble' as SlothMode,
       label: 'Lazy Voice Ramble',
+      num: '02',
       icon: Mic,
-      badge: 'Audio',
-      badgeColor: 'bg-[#1a2629] text-[#96cfd9] border-[#2a3f44]'
+      badge: 'AUDIO',
+      badgeColor: 'bg-[#182326] text-[#88c9d4] border-[#263e42]'
     },
     {
       id: 'fridge-chef' as SlothMode,
       label: 'Fridge-to-Feast',
+      num: '03',
       icon: Utensils,
-      badge: '10 Mins',
-      badgeColor: 'bg-[#29221a] text-[#deb687] border-[#423425]'
+      badge: '10 MIN',
+      badgeColor: 'bg-[#271f16] text-[#deb992] border-[#3d2e1f]'
     },
     {
       id: 'dreaded-reply' as SlothMode,
       label: 'Procrastination Breaker',
+      num: '04',
       icon: Mail,
-      badge: 'Zero Guilt',
-      badgeColor: 'bg-[#251f30] text-[#c3b4de] border-[#3e3252]'
+      badge: 'ANTIDOTE',
+      badgeColor: 'bg-[#231b2e] text-[#cbbfe8] border-[#382b4c]'
     },
     {
       id: 'wind-down' as SlothMode,
       label: 'Wind-Down & Snooze',
+      num: '05',
       icon: Moon,
-      badge: 'Offline',
-      badgeColor: 'bg-[#1b2523] text-[#97c7b8] border-[#293d39]'
+      badge: 'OFFLINE',
+      badgeColor: 'bg-[#182320] text-[#8ec7b3] border-[#263b36]'
     },
     {
       id: 'why-open' as SlothMode,
       label: 'Why Open AI Matters',
+      num: '06',
       icon: FileText,
-      badge: 'Manifesto',
-      badgeColor: 'bg-[#1c2420] text-[#a0ada6] border-[#2c3833]'
+      badge: 'MANIFESTO',
+      badgeColor: 'bg-[#1c221e] text-[#9aa8a0] border-[#29362f]'
     }
   ];
 
   return (
-    <div className="min-h-screen bg-[#101413] text-[#edf1ef] flex flex-col font-sans selection:bg-[#2c633d] selection:text-white antialiased">
+    <div className="min-h-screen bg-[#0e1210] text-[#edf2ee] flex flex-col font-sans selection:bg-[#295738] selection:text-white antialiased blueprint-dots">
       {/* Top Header */}
       <Header
         currentProvider={provider}
@@ -110,8 +117,8 @@ export const App: React.FC = () => {
           onPoked={() => handleEffortSaved(5, 10)}
         />
 
-        {/* Tab Navigation Segmented Bar */}
-        <div className="p-1.5 rounded-2xl bg-[#161b19] border border-[#242d29] flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+        {/* Tab Navigation Segmented Bar - Precision Tool Switcher */}
+        <div className="p-1.5 rounded-xl bg-[#141916] border border-[#222b26] flex items-center gap-1.5 overflow-x-auto scrollbar-none shadow-sm">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -119,19 +126,20 @@ export const App: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
+                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-lg text-xs font-mono font-medium whitespace-nowrap transition-colors tactile-btn cursor-pointer ${
                   isActive
-                    ? 'bg-[#223027] text-[#f0f3f1] border border-[#354c3e]'
-                    : 'text-[#8e9c95] hover:text-[#f0f3f1] hover:bg-[#1b221f] border border-transparent'
+                    ? 'bg-[#1d2621] text-[#edf2ee] border border-[#314237]'
+                    : 'text-[#84948b] hover:text-[#edf2ee] hover:bg-[#181f1b] border border-transparent'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-[#55b376]' : 'text-[#73827b]'}`} />
+                <span className="text-[10px] text-[#4d5f55] font-mono">{item.num}</span>
+                <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-[#4eb374]' : 'text-[#6c7d74]'}`} />
                 <span>{item.label}</span>
                 {item.badge && (
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-md font-mono border ${
+                  <span className={`text-[9px] px-1.5 py-0.2 rounded font-mono border ${
                     isActive 
                       ? item.badgeColor 
-                      : 'bg-[#1b211f] text-[#73827b] border-[#26312c]'
+                      : 'bg-[#18201c] text-[#6c7d74] border-[#222c26]'
                   }`}>
                     {item.badge}
                   </span>
@@ -193,7 +201,7 @@ export const App: React.FC = () => {
 
       {/* AI Engine Modal */}
       {isEngineModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 animate-fade-in">
           <EngineSelector
             currentProvider={provider}
             onSelectProvider={(p) => {
@@ -205,42 +213,42 @@ export const App: React.FC = () => {
         </div>
       )}
 
-      {/* Solid Natural Footer */}
-      <footer className="border-t border-[#242d29] bg-[#131715] px-4 sm:px-8 py-8 text-xs text-[#73827b] mt-16">
+      {/* Hand-Crafted Engineering Footer */}
+      <footer className="border-t border-[#222b26] bg-[#111613] px-4 sm:px-8 py-8 text-xs text-[#6e7d75] mt-16 font-mono">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5 text-center md:text-left">
           <div className="flex items-center gap-3">
-            <span className="text-2xl select-none">🦥</span>
+            <span className="text-xl select-none">🦥</span>
             <div>
-              <p className="text-[#d8deda] font-semibold flex items-center gap-2 justify-center md:justify-start">
-                SlothFlow AI <span className="text-[10px] text-[#d9ba96] font-mono bg-[#282119] px-1.5 py-0.5 rounded border border-[#3d3124]">Slow & Steady</span>
+              <p className="text-[#cbd6cf] font-bold flex items-center gap-2 justify-center md:justify-start">
+                SLOTHFLOW_AI // <span className="text-[10px] text-[#deb992] bg-[#241c14] px-1.5 py-0.5 rounded border border-[#3b2d20]">SLOW & STEADY · 2026</span>
               </p>
-              <p className="text-[11px] text-[#73827b] mt-0.5">
-                International Sloth Day Hackathon build for DEV & Hacktoberfest 2026. Built with open-weight models, Transformers.js & Ollama.
+              <p className="text-[10px] text-[#607068] mt-0.5">
+                HAND-CRAFTED OPEN ARCHITECTURE · DEV CHALLENGE WEEK 3 · CELEBRATING INTERNATIONAL SLOTH DAY
               </p>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-[#8e9c95]">
-            <span className="flex items-center gap-1.5 text-[#55b376] font-medium">
-              <CheckCircle className="w-3.5 h-3.5" /> 100% Client-Side WebGPU
+          <div className="flex flex-wrap items-center justify-center gap-4 text-[11px] text-[#84948b]">
+            <span className="flex items-center gap-1.5 text-[#8edba6]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4eb374]" /> CLIENT WEBGPU
             </span>
-            <span className="text-[#2c3631] hidden sm:inline">•</span>
+            <span className="text-[#252f29] hidden sm:inline">•</span>
             <a 
               href="https://github.com/Dev-Suraj-Dhawal/slothflow" 
               target="_blank" 
               rel="noreferrer" 
-              className="hover:text-[#f0f3f1] transition-colors flex items-center gap-1"
+              className="hover:text-[#edf2ee] transition-colors flex items-center gap-1"
             >
-              GitHub Source <ExternalLink className="w-3 h-3 opacity-60" />
+              REPOSITORY <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
-            <span className="text-[#2c3631] hidden sm:inline">•</span>
+            <span className="text-[#252f29] hidden sm:inline">•</span>
             <a 
               href="https://dev.to/challenges/hacktoberfest-week3-2026-10-19" 
               target="_blank" 
               rel="noreferrer" 
-              className="hover:text-[#9ed4b0] transition-colors flex items-center gap-1"
+              className="hover:text-[#8edba6] transition-colors flex items-center gap-1"
             >
-              DEV Challenge <ExternalLink className="w-3 h-3 opacity-60" />
+              DEV_RUBRIC <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
           </div>
         </div>

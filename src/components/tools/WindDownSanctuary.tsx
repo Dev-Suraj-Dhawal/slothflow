@@ -5,8 +5,9 @@ import {
   Volume2, 
   Pause, 
   Play, 
-  ZapOff,
-  BookOpen
+  ZapOff, 
+  BookOpen, 
+  Compass 
 } from 'lucide-react';
 import { AIProvider, BedtimeStoryResult } from '../../types';
 import { openAiService } from '../../services/openAiService';
@@ -60,10 +61,10 @@ export const WindDownSanctuary: React.FC<WindDownSanctuaryProps> = ({
 
   const handleGenerateStory = async () => {
     setLoading(true);
-    setProgressMsg('Slowly weaving tranquil nocturnal prose...');
+    setProgressMsg('WEAVING NOCTURNAL PROSE...');
     try {
       const res = await openAiService.generateBedtimeStory(theme, currentProvider, (msg) => {
-        setProgressMsg(msg);
+        setProgressMsg(msg.toUpperCase());
       });
       setResult(res);
       soundEngine.playGentleChime();
@@ -77,143 +78,156 @@ export const WindDownSanctuary: React.FC<WindDownSanctuaryProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* 4-7-8 Sloth Breathing Guide - Flat, Solid, Calming */}
-      <div className="bg-[#161b19] border border-[#242d29] rounded-2xl p-6 sm:p-8 text-center relative">
+      {/* 4-7-8 Sloth Breathing Guide - Horological & Tactile */}
+      <div className="bg-[#141916] border border-[#222b26] rounded-2xl p-6 sm:p-8 text-center relative corner-crosshairs">
         <div className="absolute top-4 right-4 flex items-center gap-2">
           <button
             onClick={() => setIsBreathingActive(!isBreathingActive)}
-            className="text-xs text-[#a0ada6] hover:text-[#f0f3f1] flex items-center gap-1.5 bg-[#1c2320] hover:bg-[#232c28] px-3 py-1.5 rounded-xl border border-[#28332e] transition-colors cursor-pointer"
+            className="text-xs font-mono text-[#9aa8a0] hover:text-[#edf2ee] flex items-center gap-1.5 bg-[#19201c] hover:bg-[#202924] px-3 py-1.5 rounded-lg border border-[#26312a] transition-colors cursor-pointer tactile-btn"
           >
-            {isBreathingActive ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
-            <span>{isBreathingActive ? 'Pause' : 'Resume'}</span>
+            {isBreathingActive ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
+            <span>{isBreathingActive ? 'PAUSE' : 'RESUME'}</span>
           </button>
         </div>
 
-        <span className="text-[11px] font-bold tracking-wider text-[#97c7b8] uppercase bg-[#1b2523] px-3 py-1 rounded-full border border-[#293d39] mb-2 inline-block">
-          🦥 4-7-8 Sloth Breathing Cadence
+        <span className="text-[10px] font-mono font-bold tracking-wider text-[#8ec7b3] uppercase bg-[#182320] px-3 py-1 rounded border border-[#263b36] mb-2 inline-block">
+          HOROLOGY // 4-7-8 PARASYMPATHETIC PACER
         </span>
 
-        {/* Breathing Orb - Clean Solid Circles, No Gradients */}
+        {/* Breathing Dial with Degrees and Concentric Rings */}
         <div className="my-6 flex flex-col items-center justify-center">
-          <div className="relative w-48 h-48 flex items-center justify-center">
+          <div className="relative w-52 h-52 flex items-center justify-center">
+            {/* Degree Marks */}
+            <span className="absolute top-0 text-[8px] font-mono text-[#384a40]">000°</span>
+            <span className="absolute right-0 text-[8px] font-mono text-[#384a40]">090°</span>
+            <span className="absolute bottom-0 text-[8px] font-mono text-[#384a40]">180°</span>
+            <span className="absolute left-0 text-[8px] font-mono text-[#384a40]">270°</span>
+
             {/* Outermost Ring */}
             <div 
-              className={`absolute inset-0 rounded-full border border-[#2c3d33] transition-all duration-1000 ${
+              className={`absolute inset-3 rounded-full border border-[#25362c] transition-all duration-1000 ${
                 breathPhase === 'Inhale' 
-                  ? 'scale-125 opacity-70' 
+                  ? 'scale-115 opacity-80' 
                   : breathPhase === 'Hold'
-                    ? 'scale-115 opacity-50'
-                    : 'scale-90 opacity-20'
+                    ? 'scale-110 opacity-60'
+                    : 'scale-90 opacity-25'
               }`}
             />
             {/* Mid Ring */}
             <div 
-              className={`absolute inset-4 rounded-full border border-[#354c3e] transition-all duration-1000 ${
+              className={`absolute inset-7 rounded-full border border-[#2e4337] transition-all duration-1000 ${
                 breathPhase === 'Inhale' 
-                  ? 'scale-110 bg-[#1c2a22]' 
+                  ? 'scale-105 bg-[#1a2920]' 
                   : breathPhase === 'Hold'
-                    ? 'scale-105 bg-[#251f30]'
-                    : 'scale-95 bg-[#121614]'
+                    ? 'scale-100 bg-[#231b2e]'
+                    : 'scale-95 bg-[#101412]'
               }`}
             />
-            {/* Inner solid circle */}
+            {/* Inner solid mechanical core */}
             <div 
               className={`w-32 h-32 rounded-full flex flex-col items-center justify-center text-white transition-all duration-1000 ${
                 breathPhase === 'Inhale'
-                  ? 'bg-[#223d2d] scale-105 border border-[#3c6b4f]'
+                  ? 'bg-[#1f3829] scale-105 border border-[#356145]'
                   : breathPhase === 'Hold'
-                    ? 'bg-[#352747] scale-105 border border-[#523d6e]'
-                    : 'bg-[#18201d] scale-90 border border-[#283630]'
+                    ? 'bg-[#2f2240] scale-105 border border-[#483463]'
+                    : 'bg-[#161c19] scale-90 border border-[#242e29]'
               }`}
             >
-              <span className="text-xs font-bold tracking-wider uppercase text-[#c7d6ce]">{breathPhase}</span>
-              <span className="text-3xl font-extrabold mt-0.5 tabular-nums text-[#f0f3f1]">{secondsLeft}s</span>
+              <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-[#b2c4ba]">{breathPhase}</span>
+              <span className="text-3xl font-mono font-bold mt-0.5 tabular-nums text-[#edf2ee]">{secondsLeft}s</span>
             </div>
           </div>
-          <p className="text-xs text-[#8e9c95] mt-3 font-medium max-w-sm">
-            Calibrated to Sloan's resting respiratory rate: activates the parasympathetic nervous system in 2 minutes.
+          <p className="text-xs font-mono text-[#76877e] mt-3 max-w-sm">
+            CALIBRATED TO SLOAN'S RESTING METABOLIC FREQUENCY (0.12 HZ)
           </p>
         </div>
       </div>
 
       {/* Bedtime Micro-Story Generator */}
-      <div className="bg-[#161b19] border border-[#242d29] rounded-2xl p-5 sm:p-6">
+      <div className="bg-[#141916] border border-[#222b26] rounded-2xl p-5 sm:p-6 corner-crosshairs">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-base font-bold text-[#f0f3f1] flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#251f30] text-[#c3b4de] border border-[#3e3252]">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-mono text-[#526359] tracking-wider uppercase">
+                TOOL // MODULE_05
+              </span>
+              <span className="text-[#323f38] font-mono">•</span>
+              <span className="text-[10px] font-mono text-[#8ec7b3]">SOMNOLENCE</span>
+            </div>
+            <h2 className="text-base font-bold text-[#edf2ee] flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-[#231b2e] text-[#cbbfe8] border border-[#382b4c]">
                 <Moon className="w-4 h-4" />
               </span>
               Offline Wind-Down & Bedtime Companion
             </h2>
-            <p className="text-xs text-[#8e9c95] mt-1 max-w-2xl leading-relaxed">
-              Slow down mental chatter before sleep. Open-weight models synthesize tranquil micro-stories at a soothing rhythm, running entirely on your machine.
+            <p className="text-xs text-[#84948b] mt-1 max-w-2xl leading-relaxed">
+              De-escalate cognitive noise before sleep. Open models synthesize tranquil micro-stories at a soothing rhythm, executing 100% locally on your machine.
             </p>
           </div>
 
           <button
             onClick={onOpenSoundBar}
-            className="flex items-center gap-1.5 text-xs text-[#9ed4b0] font-semibold px-3 py-1.5 rounded-xl bg-[#1c2a22] border border-[#2b4234] hover:bg-[#23362b] self-end sm:self-auto transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 text-xs font-mono text-[#8edba6] px-3 py-1.5 rounded-lg bg-[#1a2820] border border-[#294232] hover:bg-[#203328] self-end sm:self-auto transition-colors cursor-pointer tactile-btn"
           >
-            <Volume2 className="w-3.5 h-3.5 text-[#55b376]" />
-            <span>Open Ambient Sound Mixer</span>
+            <Volume2 className="w-3.5 h-3.5 text-[#4eb374]" />
+            <span>OPEN_SYNTHESIZER</span>
           </button>
         </div>
 
         <div className="mb-3.5">
-          <label className="block text-xs font-semibold text-[#c7d1cc] mb-1.5">
-            Story setting / sleepy nocturnal theme:
+          <label className="block text-xs font-mono text-[#9aa8a0] mb-1.5 uppercase">
+            // NOCTURNAL PROMPT OR LOCATION
           </label>
           <input
             type="text"
             value={theme}
             onChange={(e) => setTheme(e.target.value)}
-            className="w-full bg-[#101413] border border-[#242d29] rounded-xl p-3.5 text-xs text-[#edf1ef] placeholder:text-[#525f58] focus:outline-none focus:border-[#413557] font-medium"
+            className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-3.5 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#334d3d] font-mono"
           />
         </div>
 
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-          <span className="text-xs text-[#8e9c95] flex items-center gap-1.5">
-            <ZapOff className="w-3.5 h-3.5 text-[#c3b4de]" />
-            100% offline — won't ping corporate servers in your bedroom
+          <span className="text-xs font-mono text-[#76877e] flex items-center gap-1.5">
+            <ZapOff className="w-3.5 h-3.5 text-[#cbbfe8]" />
+            AIR-GAPPED COMPLIANT · BEDROOM SAFE
           </span>
 
           <button
             onClick={handleGenerateStory}
             disabled={loading}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#483861] hover:bg-[#574475] text-white font-semibold text-xs border border-[#634e85] transition-colors disabled:opacity-50 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#392e4d] hover:bg-[#46395e] text-white font-mono font-bold text-xs border border-[#544470] transition-colors disabled:opacity-50 cursor-pointer tactile-btn"
           >
             {loading ? (
               <>
                 <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>{progressMsg || 'Weaving story...'}</span>
+                <span>{progressMsg || 'WEAVING...'}</span>
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4" />
-                <span>Generate Bedtime Reflection</span>
+                <span>SYNTHESIZE BEDTIME REFLECTION</span>
               </>
             )}
           </button>
         </div>
       </div>
 
-      {/* Generated Story Display with Literary Serif Styling */}
+      {/* Generated Story Display with Letterpress Styling */}
       {result && (
-        <div className="bg-[#131715] border border-[#2a3830] rounded-2xl p-6 sm:p-8 space-y-4">
-          <div className="flex items-center justify-between pb-3.5 border-b border-[#242d29]">
-            <h3 className="text-lg font-bold text-[#f0f3f1] flex items-center gap-2 font-serif-reading">
-              <BookOpen className="w-4 h-4 text-[#8e9c95]" /> {result.title}
+        <div className="bg-[#111613] border border-[#25332a] rounded-2xl p-6 sm:p-8 space-y-4">
+          <div className="flex items-center justify-between pb-3.5 border-b border-[#202723]">
+            <h3 className="text-base font-bold text-[#edf2ee] flex items-center gap-2 font-serif-letterpress">
+              <BookOpen className="w-4 h-4 text-[#8edba6]" /> {result.title}
             </h3>
-            <span className="text-xs text-[#9ed4b0] font-mono bg-[#1c2a22] px-2.5 py-0.5 rounded-md border border-[#2b4234]">
+            <span className="text-[10px] text-[#8edba6] font-mono bg-[#1a2820] px-2.5 py-0.5 rounded border border-[#294232]">
               {result.ambientRecommendation}
             </span>
           </div>
 
-          {/* Literary Serif Body */}
-          <div className="font-serif-reading text-[#d6deda] text-base leading-loose space-y-4 max-w-3xl">
+          {/* Letterpress Serif Body */}
+          <div className="font-serif-letterpress text-[#cfded4] text-base leading-relaxed space-y-4 max-w-3xl">
             {result.storyMarkdown.split('\n\n').map((para, i) => (
-              <p key={i} className="text-[#d6deda] first-letter:text-3xl first-letter:font-bold first-letter:text-[#9ed4b0] first-letter:float-left first-letter:mr-2">
+              <p key={i} className="text-[#cfded4] first-letter:text-3xl first-letter:font-bold first-letter:text-[#8edba6] first-letter:float-left first-letter:mr-2.5 first-letter:font-mono">
                 {para}
               </p>
             ))}

@@ -2,104 +2,161 @@
 
 @layer base {
   :root {
-    --bg-canvas: #101413;
-    --bg-surface: #161b19;
-    --bg-card: #1c2320;
-    --bg-card-hover: #232c28;
-    --bg-inset: #0c0f0e;
+    --bg-canvas: #0e1210;
+    --bg-surface: #141916;
+    --bg-card: #19201c;
+    --bg-card-hover: #1f2723;
+    --bg-inset: #0a0d0b;
     
-    --border-subtle: #242d29;
-    --border-strong: #333f3a;
+    --border-hairline: #222b26;
+    --border-medium: #2c3832;
+    --border-accent: #3b5044;
     
-    --color-green: #2c633d;
-    --color-green-hover: #36784b;
-    --color-green-soft: #192d21;
-    --color-green-text: #a8dfba;
+    --color-green: #295738;
+    --color-green-hover: #326b45;
+    --color-green-soft: #17241c;
+    --color-green-text: #8edba6;
     
-    --color-earth: #8f6036;
-    --color-earth-hover: #a87242;
-    --color-earth-soft: #2e2014;
-    --color-earth-text: #e6c8ab;
+    --color-earth: #785331;
+    --color-earth-soft: #241c14;
+    --color-earth-text: #deb992;
     
-    --color-mist: #33423b;
-    --color-mist-soft: #17211d;
-    --color-mist-text: #a3c2b3;
+    --color-mist: #2a3d3c;
+    --color-mist-soft: #141f1f;
+    --color-mist-text: #96cfcb;
     
-    --color-lavender: #4c466b;
-    --color-lavender-soft: #221f33;
-    --color-lavender-text: #c5bfeb;
+    --color-lavender: #433959;
+    --color-lavender-soft: #1d1829;
+    --color-lavender-text: #cbbfe8;
 
-    --text-main: #f0f3f1;
-    --text-muted: #a1ada7;
-    --text-faint: #6e7a74;
+    --text-primary: #edf2ee;
+    --text-secondary: #9aa8a0;
+    --text-tertiary: #67756e;
+    --text-mono: #82948a;
   }
 }
 
-/* Clean, Flat, Solid Natural UI Elements */
-.natural-panel {
-  background-color: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+/* Artisanal Grid Texture & Blueprint Elements */
+.blueprint-dots {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.natural-card {
+.hairline-border {
+  border: 1px solid var(--border-hairline);
+}
+
+.tactile-card {
   background-color: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  border: 1px solid var(--border-hairline);
+  position: relative;
+  transition: border-color 0.18s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.18s ease;
 }
 
-.natural-card:hover {
+.tactile-card:hover {
+  border-color: var(--border-medium);
   background-color: var(--bg-card-hover);
-  border-color: var(--border-strong);
 }
 
-.natural-input {
-  background-color: var(--bg-inset);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  transition: border-color 0.15s ease;
+/* Artisanal Corner Crosshair / Registration Marks */
+.corner-crosshairs {
+  position: relative;
 }
 
-.natural-input:focus {
-  outline: none;
-  border-color: var(--color-green-text);
+.corner-crosshairs::before,
+.corner-crosshairs::after {
+  content: '+';
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  line-height: 1;
+  color: #3b4941;
+  pointer-events: none;
 }
 
-/* Serif Reading Mode for Bedtime Stories - Natural Paper Feel */
-.font-serif-reading {
+.corner-crosshairs::before {
+  top: 4px;
+  left: 6px;
+}
+
+.corner-crosshairs::after {
+  bottom: 4px;
+  right: 6px;
+}
+
+/* Tactile Mechanical Button */
+.tactile-btn {
+  transition: transform 0.08s ease, background-color 0.15s ease, border-color 0.15s ease;
+  user-select: none;
+}
+
+.tactile-btn:active {
+  transform: translateY(1px);
+}
+
+/* Letterpress Serif Typography for Story Reflections */
+.font-serif-letterpress {
   font-family: 'Newsreader', Georgia, serif;
-  font-feature-settings: "onum", "pnum";
+  font-feature-settings: "onum", "pnum", "dlig";
+  letter-spacing: -0.01em;
 }
 
-/* Subtle, Quiet Animations (No Flashy Gimmicks) */
-@keyframes sloth-breathe-subtle {
+/* Precision Mechanical Animations */
+@keyframes sloth-breathe-anatomical {
   0%, 100% {
     transform: scale(1);
   }
-  50% {
-    transform: scale(1.04);
+  35% {
+    transform: scale(1.035);
+  }
+  45% {
+    transform: scale(1.038);
   }
 }
 
-.animate-sloth-breathe {
-  animation: sloth-breathe-subtle 6s ease-in-out infinite;
-  transform-origin: center;
+@keyframes vu-meter-tick {
+  0%, 100% { height: 4px; }
+  25% { height: 16px; }
+  50% { height: 26px; }
+  75% { height: 12px; }
 }
 
-/* Clean Flat Scrollbar */
+@keyframes led-blink-gentle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.animate-sloth-breathe {
+  animation: sloth-breathe-anatomical 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: 70px 76px;
+}
+
+.animate-led-blink {
+  animation: led-blink-gentle 2.5s ease-in-out infinite;
+}
+
+/* Audio VU Meter Ticks */
+.vu-bar-1 { animation: vu-meter-tick 1.1s ease-in-out infinite; }
+.vu-bar-2 { animation: vu-meter-tick 0.8s ease-in-out infinite 0.15s; }
+.vu-bar-3 { animation: vu-meter-tick 1.4s ease-in-out infinite 0.3s; }
+.vu-bar-4 { animation: vu-meter-tick 0.9s ease-in-out infinite 0.1s; }
+.vu-bar-5 { animation: vu-meter-tick 1.2s ease-in-out infinite 0.25s; }
+
+/* Custom Sleek Matte Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #101413;
+  background: #0e1210;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27322e;
-  border-radius: 3px;
+  background: #232b26;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #394741;
+  background: #344039;
 }

@@ -5,9 +5,10 @@ import {
   Check, 
   Copy, 
   Send, 
-  ZapOff,
-  CheckCircle2,
-  Clock
+  ZapOff, 
+  CheckCircle2, 
+  Clock, 
+  Terminal 
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { AIProvider, ChatTidierResult } from '../../types';
@@ -55,12 +56,12 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
   const handleTidy = async () => {
     if (!inputText.trim()) return;
     setLoading(true);
-    setProgressMsg('Waking up Sloan to read unread chatter...');
+    setProgressMsg('SCANNING UNREAD MESSAGE STREAM...');
     setResult(null);
 
     try {
       const res = await openAiService.tidyChat(inputText, currentProvider, (msg) => {
-        setProgressMsg(msg);
+        setProgressMsg(msg.toUpperCase());
       });
       setResult(res);
       soundEngine.playGentleChime();
@@ -68,7 +69,7 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
         particleCount: 15,
         spread: 50,
         origin: { y: 0.8 },
-        colors: ['#2e6f40', '#8f6036', '#4a6b5d']
+        colors: ['#295738', '#785331', '#433959']
       });
       onEffortSaved(25, 45);
     } catch (err: unknown) {
@@ -87,69 +88,76 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
   return (
     <div className="space-y-6">
       {/* Top Banner & Input */}
-      <div className="bg-[#161b19] border border-[#242d29] rounded-2xl p-5 sm:p-6">
+      <div className="bg-[#141916] border border-[#222b26] rounded-2xl p-5 sm:p-6 corner-crosshairs">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-base font-bold text-[#f0f3f1] flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#1f2b23] text-[#55b376] border border-[#2a4032]">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-mono text-[#526359] tracking-wider uppercase">
+                TOOL // MODULE_01
+              </span>
+              <span className="text-[#323f38] font-mono">•</span>
+              <span className="text-[10px] font-mono text-[#8edba6]">FILTER_CHAOS</span>
+            </div>
+            <h2 className="text-base font-bold text-[#edf2ee] flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-[#1a2820] text-[#4eb374] border border-[#273d30]">
                 <MessageSquare className="w-4 h-4" />
               </span>
               Chaos to 2-Line Clarity (Chat & Inbox Tidier)
             </h2>
-            <p className="text-xs text-[#8e9c95] mt-1 max-w-2xl leading-relaxed">
-              Dump dozens of unread messages from noisy group chats or emails. The open-weight model distills the 5% that actually matters and drafts polite 1-click replies.
+            <p className="text-xs text-[#84948b] mt-1 max-w-2xl leading-relaxed">
+              Dump unread messages from group chats or noisy threads. Sloan filters the 5% that matters, drafts 1-click polite replies, and flags real blockers.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0">
-            <span className="text-[11px] text-[#73827b] mr-1 hidden sm:inline">Try preset:</span>
+          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0 font-mono">
+            <span className="text-[10px] text-[#5c6e64] mr-1 hidden sm:inline">DATASET:</span>
             {PRESETS.map((p, idx) => (
               <button
                 key={idx}
                 onClick={() => setInputText(p.content)}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-[#1c2320] hover:bg-[#232c28] text-[#a0ada6] border border-[#28332e] transition-colors cursor-pointer"
+                className="text-[11px] font-medium px-2.5 py-1 rounded bg-[#19201c] hover:bg-[#202924] text-[#9aa8a0] hover:text-[#edf2ee] border border-[#26312a] transition-colors cursor-pointer tactile-btn"
               >
-                Preset {idx + 1}
+                SAMPLE_{idx + 1}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Input Area */}
+        {/* Input Area with Hairline Grid Framing */}
         <div className="relative mb-3.5">
           <textarea
             rows={7}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Paste raw unread chat, Slack thread, Discord logs, or email messages here..."
-            className="w-full bg-[#101413] border border-[#242d29] rounded-xl p-4 text-xs text-[#edf1ef] placeholder:text-[#525f58] focus:outline-none focus:border-[#3d5947] transition-colors font-mono leading-relaxed"
+            placeholder="Paste raw message stream here..."
+            className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-4 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#334d3d] transition-colors font-mono leading-relaxed"
           />
-          <div className="absolute bottom-3 right-3 text-[10px] font-mono text-[#6e7c75] bg-[#161b19] px-2 py-0.5 rounded border border-[#242d29]">
-            {inputText.length} chars
+          <div className="absolute bottom-3 right-3 text-[10px] font-mono text-[#607067] bg-[#141916] px-2 py-0.5 rounded border border-[#222b26]">
+            {inputText.length} BYTES
           </div>
         </div>
 
         {/* Action Button & Telemetry */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-          <span className="text-xs text-[#8e9c95] flex items-center gap-1.5">
-            <ZapOff className="w-3.5 h-3.5 text-[#55b376]" />
-            Conserves ~25 mins of screen scrolling fatigue
+          <span className="text-xs font-mono text-[#76877e] flex items-center gap-1.5">
+            <ZapOff className="w-3.5 h-3.5 text-[#4eb374]" />
+            CONSERVES ~25 MIN DECISION LATENCY
           </span>
 
           <button
             onClick={handleTidy}
             disabled={loading || !inputText.trim()}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#285e38] hover:bg-[#327345] text-white font-semibold text-xs border border-[#3b8551] transition-colors disabled:opacity-50 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#295738] hover:bg-[#326b45] text-white font-mono font-bold text-xs border border-[#3b7a50] transition-colors disabled:opacity-50 cursor-pointer tactile-btn"
           >
             {loading ? (
               <>
                 <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>{progressMsg || 'Reading lazily...'}</span>
+                <span>{progressMsg || 'DECODING...'}</span>
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4" />
-                <span>Distill to 2-Line Sloth Brief</span>
+                <span>EXECUTE SLOTH BRIEF</span>
               </>
             )}
           </button>
@@ -158,54 +166,54 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
 
       {/* Results View */}
       {result && (
-        <div className="bg-[#161b19] border border-[#2c3d33] rounded-2xl p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between pb-3.5 border-b border-[#242d29]">
+        <div className="bg-[#141916] border border-[#27382e] rounded-2xl p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between pb-3.5 border-b border-[#202723]">
             <div className="flex items-center gap-2.5">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#9ed4b0] flex items-center gap-1.5">
-                🦥 Sloan's Executive Brief
+              <span className="text-xs font-mono font-bold tracking-wider text-[#8edba6] flex items-center gap-1.5">
+                SLOAN_BRIEF //
               </span>
-              <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${
+              <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
                 result.urgencyLevel === 'One Quick Action Needed'
-                  ? 'bg-[#2b1c1c] border-[#472a2a] text-[#e09b9b]'
+                  ? 'bg-[#261717] border-[#422525] text-[#db8f8f]'
                   : result.urgencyLevel === 'Low Effort'
-                    ? 'bg-[#2b2218] border-[#453422] text-[#deb687]'
-                    : 'bg-[#1a2820] border-[#294233] text-[#9ed4b0]'
+                    ? 'bg-[#261e14] border-[#3d2e1f] text-[#deb992]'
+                    : 'bg-[#17241c] border-[#253d2d] text-[#8edba6]'
               }`}>
-                Urgency: {result.urgencyLevel}
+                URGENCY: {result.urgencyLevel.toUpperCase()}
               </span>
             </div>
 
-            <span className="text-xs text-[#8e9c95] font-medium flex items-center gap-1">
-              <Clock className="w-3.5 h-3.5 text-[#55b376]" />
-              Effort saved: <strong className="text-[#f0f3f1] font-bold">25m</strong>
+            <span className="text-xs font-mono text-[#76877e] flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5 text-[#4eb374]" />
+              TIME SAVED: <strong className="text-[#edf2ee]">25M</strong>
             </span>
           </div>
 
           {/* 2-Line Brief Callout */}
-          <div className="bg-[#19241e] border-l-4 border-l-[#55b376] border-r border-t border-b border-[#273d30] rounded-xl p-4 text-sm text-[#d4ede0] font-medium leading-relaxed">
+          <div className="bg-[#101412] border-l-4 border-l-[#4eb374] border-r border-t border-b border-[#1f2923] rounded-xl p-4 text-sm text-[#d4ede0] font-sans font-medium leading-relaxed">
             {result.twoLineBrief}
           </div>
 
           {/* Quick 1-Click Replies */}
           <div>
-            <h4 className="text-xs font-bold text-[#b4c0b9] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-              <Send className="w-3.5 h-3.5 text-[#55b376]" />
-              Zero-Brainpower 1-Click Replies:
+            <h4 className="text-[11px] font-mono font-bold text-[#84948b] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+              <Send className="w-3 h-3 text-[#4eb374]" />
+              READY DISPATCH (ONE CLICK BUFFER COPY):
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
               {result.suggestedReplies.map((reply, idx) => (
                 <div
                   key={idx}
                   onClick={() => copyReply(reply, idx)}
-                  className="group cursor-pointer bg-[#1b221f] border border-[#26312c] hover:border-[#385242] rounded-xl p-3.5 text-xs text-[#d6deda] transition-colors flex items-center justify-between gap-2"
+                  className="group cursor-pointer bg-[#18201c] border border-[#222c26] hover:border-[#324538] rounded-xl p-3.5 text-xs text-[#cbd6cf] transition-colors flex items-center justify-between gap-2 tactile-btn"
                 >
                   <span className="italic font-sans">"{reply}"</span>
                   <button
-                    className="p-1.5 rounded-lg bg-[#222b27] text-[#8e9c95] group-hover:text-[#9ed4b0] shrink-0 transition-colors"
-                    title="Copy to clipboard"
+                    className="p-1 rounded bg-[#1f2923] text-[#718279] group-hover:text-[#8edba6] shrink-0 transition-colors"
+                    title="Copy to buffer"
                   >
                     {copiedIndex === idx ? (
-                      <Check className="w-3.5 h-3.5 text-[#55b376]" />
+                      <Check className="w-3.5 h-3.5 text-[#4eb374]" />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
@@ -217,16 +225,16 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
 
           {/* Extracted Tasks (If any) */}
           {result.extractedTasks && result.extractedTasks.length > 0 && (
-            <div className="pt-2 border-t border-[#242d29]">
-              <h4 className="text-xs font-bold text-[#8e9c95] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#55b376]" />
-                What's Actually on You:
+            <div className="pt-2 border-t border-[#202723]">
+              <h4 className="text-[11px] font-mono font-bold text-[#76877e] uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
+                <CheckCircle2 className="w-3 h-3 text-[#4eb374]" />
+                ACTION REGISTER:
               </h4>
-              <ul className="space-y-2 text-xs text-[#d6deda]">
+              <ul className="space-y-2 text-xs text-[#cbd6cf]">
                 {result.extractedTasks.map((t, i) => (
-                  <li key={i} className="flex items-center gap-2.5 bg-[#1b221f] px-3.5 py-2 rounded-xl border border-[#26312c]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#55b376] shrink-0" />
-                    <span className="font-medium">{t}</span>
+                  <li key={i} className="flex items-center gap-2.5 bg-[#18201c] px-3.5 py-2 rounded-xl border border-[#222c26] font-mono text-[11px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#4eb374] shrink-0" />
+                    <span>{t}</span>
                   </li>
                 ))}
               </ul>

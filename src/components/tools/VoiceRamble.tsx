@@ -7,7 +7,8 @@ import {
   Check, 
   ListChecks, 
   ShoppingCart, 
-  ZapOff 
+  ZapOff,
+  Radio
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { AIProvider, VoiceRambleResult } from '../../types';
@@ -83,12 +84,12 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
   const handleProcess = async () => {
     if (!transcript.trim()) return;
     setLoading(true);
-    setProgressMsg('Parsing lazy voice stream...');
+    setProgressMsg('STRUCTURING ACOUSTIC STREAM...');
     setResult(null);
 
     try {
       const res = await openAiService.processVoiceRamble(transcript, currentProvider, (msg) => {
-        setProgressMsg(msg);
+        setProgressMsg(msg.toUpperCase());
       });
       setResult(res);
       soundEngine.playGentleChime();
@@ -96,7 +97,7 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
         particleCount: 15,
         spread: 50,
         origin: { y: 0.8 },
-        colors: ['#2e6f40', '#8f6036', '#4a6b5d']
+        colors: ['#295738', '#785331', '#433959']
       });
       onEffortSaved(15, 30);
     } catch (err: unknown) {
@@ -116,27 +117,34 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
 
   return (
     <div className="space-y-6">
-      <div className="bg-[#161b19] border border-[#242d29] rounded-2xl p-5 sm:p-6">
+      <div className="bg-[#141916] border border-[#222b26] rounded-2xl p-5 sm:p-6 corner-crosshairs">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-base font-bold text-[#f0f3f1] flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#192426] text-[#96cfd9] border border-[#273d42]">
+            <div className="flex items-center gap-2 mb-1">
+              <span className="text-[10px] font-mono text-[#526359] tracking-wider uppercase">
+                TOOL // MODULE_02
+              </span>
+              <span className="text-[#323f38] font-mono">•</span>
+              <span className="text-[10px] font-mono text-[#88c9d4]">VOICE_HARVEST</span>
+            </div>
+            <h2 className="text-base font-bold text-[#edf2ee] flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-[#152326] text-[#88c9d4] border border-[#263e42]">
                 <Mic className="w-4 h-4" />
               </span>
               Lazy Voice Ramble to Clean Roadmap
             </h2>
-            <p className="text-xs text-[#8e9c95] mt-1 max-w-2xl leading-relaxed">
-              Speak or mumble while lying down. The open model extracts clean groceries, action items, or notes without requiring you to organize anything.
+            <p className="text-xs text-[#84948b] mt-1 max-w-2xl leading-relaxed">
+              Mumble while half-asleep. The open-source model extracts clean groceries, action items, or notes without requiring you to organize or structure anything.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0">
-            <span className="text-[11px] text-[#73827b] mr-1 hidden sm:inline">Try preset:</span>
+          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0 font-mono">
+            <span className="text-[10px] text-[#5c6e64] mr-1 hidden sm:inline">PRESET:</span>
             {VOICE_PRESETS.map((p, i) => (
               <button
                 key={i}
                 onClick={() => setTranscript(p.text)}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-[#1c2320] hover:bg-[#232c28] text-[#a0ada6] border border-[#28332e] transition-colors cursor-pointer"
+                className="text-[11px] font-medium px-2.5 py-1 rounded bg-[#19201c] hover:bg-[#202924] text-[#9aa8a0] hover:text-[#edf2ee] border border-[#26312a] transition-colors cursor-pointer tactile-btn"
               >
                 {p.label}
               </button>
@@ -150,28 +158,35 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
             rows={5}
             value={transcript}
             onChange={(e) => setTranscript(e.target.value)}
-            placeholder="Click the microphone and speak lazily, or type your incoherent thoughts..."
-            className="w-full bg-[#101413] border border-[#242d29] rounded-xl p-4 text-xs text-[#edf1ef] placeholder:text-[#525f58] focus:outline-none focus:border-[#385954] transition-colors font-mono leading-relaxed"
+            placeholder="Click the microphone or type rambling stream-of-consciousness..."
+            className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-4 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#2f4f4f] transition-colors font-mono leading-relaxed"
           />
 
-          <div className="absolute bottom-3 right-3 flex items-center gap-2">
+          <div className="absolute bottom-3 right-3 flex items-center gap-2 font-mono">
+            {isRecording && (
+              <div className="flex items-center gap-1 px-2.5 py-1 bg-[#101412] rounded border border-[#422525] text-[10px] text-[#db8f8f]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#db8f8f] animate-ping" />
+                <span>REC // STREAMING</span>
+              </div>
+            )}
+
             <button
               onClick={toggleRecording}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-colors cursor-pointer ${
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium border transition-colors cursor-pointer tactile-btn ${
                 isRecording
-                  ? 'bg-[#472222] text-[#f2adad] border-[#6b3535]'
-                  : 'bg-[#1c2320] text-[#a0ada6] border-[#28332e] hover:text-[#f0f3f1] hover:bg-[#232c28]'
+                  ? 'bg-[#3d1e1e] text-[#f0afaf] border-[#592d2d]'
+                  : 'bg-[#19201c] text-[#9aa8a0] border-[#26312a] hover:text-[#edf2ee] hover:bg-[#202924]'
               }`}
             >
               {isRecording ? (
                 <>
                   <MicOff className="w-3.5 h-3.5" />
-                  <span>Stop Listening</span>
+                  <span>HALT_MIC</span>
                 </>
               ) : (
                 <>
-                  <Mic className="w-3.5 h-3.5 text-[#96cfd9]" />
-                  <span>Record Voice</span>
+                  <Mic className="w-3.5 h-3.5 text-[#88c9d4]" />
+                  <span>RECORD_VOICE</span>
                 </>
               )}
             </button>
@@ -180,25 +195,25 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
 
         {/* Action Button */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-          <span className="text-xs text-[#8e9c95] flex items-center gap-1.5">
-            <ZapOff className="w-3.5 h-3.5 text-[#96cfd9]" />
-            Zero friction note taking for exhausted brains
+          <span className="text-xs font-mono text-[#76877e] flex items-center gap-1.5">
+            <ZapOff className="w-3.5 h-3.5 text-[#88c9d4]" />
+            ZERO SYNTAX OVERHEAD FOR TIRED BRAINS
           </span>
 
           <button
             onClick={handleProcess}
             disabled={loading || !transcript.trim()}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#23505c] hover:bg-[#2b6170] text-white font-semibold text-xs border border-[#357587] transition-colors disabled:opacity-50 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#22444d] hover:bg-[#2c5561] text-white font-mono font-bold text-xs border border-[#376978] transition-colors disabled:opacity-50 cursor-pointer tactile-btn"
           >
             {loading ? (
               <>
                 <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                <span>{progressMsg || 'Organizing...'}</span>
+                <span>{progressMsg || 'EXTRACTING...'}</span>
               </>
             ) : (
               <>
                 <Sparkles className="w-4 h-4" />
-                <span>Clean & Categorize Ramble</span>
+                <span>CLEANSE & CATEGORIZE</span>
               </>
             )}
           </button>
@@ -207,48 +222,48 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
 
       {/* Result Display */}
       {result && (
-        <div className="bg-[#161b19] border border-[#26373b] rounded-2xl p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between pb-3.5 border-b border-[#242d29]">
+        <div className="bg-[#141916] border border-[#233538] rounded-2xl p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between pb-3.5 border-b border-[#202723]">
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#96cfd9] flex items-center gap-1.5">
+              <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#88c9d4] flex items-center gap-1.5">
                 {result.category === 'Groceries' ? (
-                  <ShoppingCart className="w-4 h-4 text-[#55b376]" />
+                  <ShoppingCart className="w-4 h-4 text-[#4eb374]" />
                 ) : (
-                  <ListChecks className="w-4 h-4 text-[#96cfd9]" />
+                  <ListChecks className="w-4 h-4 text-[#88c9d4]" />
                 )}
-                Category: {result.category}
+                CATEGORY // {result.category.toUpperCase()}
               </span>
             </div>
 
             <button
               onClick={copyBullets}
-              className="flex items-center gap-1.5 text-xs text-[#a0ada6] hover:text-[#f0f3f1] bg-[#1c2320] hover:bg-[#232c28] px-3 py-1.5 rounded-xl border border-[#28332e] transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-mono text-[#9aa8a0] hover:text-[#edf2ee] bg-[#19201c] hover:bg-[#202924] px-3 py-1.5 rounded-lg border border-[#26312a] transition-colors cursor-pointer tactile-btn"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-[#55b376]" />
-                  <span className="text-[#9ed4b0] font-medium">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-[#4eb374]" />
+                  <span className="text-[#8edba6]">COPIED</span>
                 </>
               ) : (
                 <>
                   <Copy className="w-3.5 h-3.5" />
-                  <span>Copy List</span>
+                  <span>EXPORT_BUFFER</span>
                 </>
               )}
             </button>
           </div>
 
-          <div className="text-xs text-[#8e9c95] bg-[#101413] px-4 py-2.5 rounded-xl border border-[#242d29]">
-            Core intent: <strong className="text-[#edf1ef] font-medium">{result.cleansedIntent}</strong>
+          <div className="text-xs font-mono text-[#76877e] bg-[#0c0f0d] px-4 py-2.5 rounded-xl border border-[#202723]">
+            INTENT // <strong className="text-[#cbd6cf] font-medium">{result.cleansedIntent}</strong>
           </div>
 
-          <div className="space-y-2 pt-1">
+          <div className="space-y-2 pt-1 font-mono text-xs">
             {result.bulletItems.map((item, idx) => (
               <div 
                 key={idx}
-                className="flex items-center gap-3 bg-[#1b221f] border border-[#26312c] rounded-xl px-4 py-3 text-xs text-[#d6deda]"
+                className="flex items-center gap-3 bg-[#18201c] border border-[#222c26] rounded-xl px-4 py-3 text-[#cbd6cf]"
               >
-                <span className="w-2 h-2 rounded-full bg-[#52a1b0] shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#4aa1af] shrink-0" />
                 <span className="font-medium">{item.replace(/^•\s*/, '')}</span>
               </div>
             ))}
