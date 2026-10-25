@@ -73,30 +73,30 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
   };
 
   return (
-    <div className="space-y-6">
-      <div className="bg-[#141916] border border-[#222b26] rounded-2xl p-5 sm:p-6 corner-crosshairs">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
-          <div>
+    <div className="space-y-4 sm:space-y-6">
+      <div className="bg-[#141916] border border-[#222b26] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 md:p-6 corner-crosshairs">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-3.5 sm:mb-4">
+          <div className="min-w-0">
             <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-mono text-[#526359] tracking-wider uppercase">
+              <span className="text-[9px] sm:text-[10px] font-mono text-[#526359] tracking-wider uppercase">
                 TOOL // MODULE_03
               </span>
               <span className="text-[#323f38] font-mono">•</span>
-              <span className="text-[10px] font-mono text-[#deb992]">PANTRY_SYNTHESIS</span>
+              <span className="text-[9px] sm:text-[10px] font-mono text-[#deb992]">PANTRY_SYNTHESIS</span>
             </div>
-            <h2 className="text-base font-bold text-[#edf2ee] flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-[#271f16] text-[#deb992] border border-[#3d2e1f]">
-                <Utensils className="w-4 h-4" />
+            <h2 className="text-sm sm:text-base font-bold text-[#edf2ee] flex items-center gap-2">
+              <span className="p-1 sm:p-1.5 rounded-lg bg-[#271f16] text-[#deb992] border border-[#3d2e1f] shrink-0">
+                <Utensils className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </span>
-              Fridge-to-Feast (No-Brain Cooking)
+              <span>Fridge-to-Feast (No-Brain Cooking)</span>
             </h2>
-            <p className="text-xs text-[#84948b] mt-1 max-w-2xl leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-[#84948b] mt-1 max-w-2xl leading-relaxed">
               Stop standing in front of the open fridge door staring blankly. Type whatever scraps you see, and Sloan will devise a 3-step lazy feast requiring only 1 pan and minimal dishwashing.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0 font-mono">
-            <span className="text-[10px] text-[#5c6e64] mr-1 hidden sm:inline">PANTRY:</span>
+          <div className="flex items-center gap-1.5 self-start sm:self-auto shrink-0 font-mono w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+            <span className="text-[9px] sm:text-[10px] text-[#5c6e64] mr-1 hidden sm:inline">PANTRY:</span>
             {FRIDGE_PRESETS.map((p, i) => (
               <button
                 key={i}
@@ -104,17 +104,17 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
                   setIngredients(p.ingredients);
                   setDietary(p.dietary);
                 }}
-                className="text-[11px] font-medium px-2.5 py-1 rounded bg-[#19201c] hover:bg-[#202924] text-[#9aa8a0] hover:text-[#edf2ee] border border-[#26312a] transition-colors cursor-pointer tactile-btn"
+                className="text-[10px] sm:text-[11px] font-medium px-2.5 py-1 rounded bg-[#19201c] hover:bg-[#202924] text-[#9aa8a0] hover:text-[#edf2ee] border border-[#26312a] transition-colors cursor-pointer tactile-btn whitespace-nowrap"
               >
-                PRESET_{i + 1}
+                {p.name.split(' ')[0]} Preset
               </button>
             ))}
           </div>
         </div>
 
-        <div className="space-y-3 mb-3.5">
+        <div className="space-y-2.5 sm:space-y-3 mb-3">
           <div>
-            <label className="block text-xs font-mono text-[#9aa8a0] mb-1.5 uppercase">
+            <label className="block text-[10px] sm:text-xs font-mono text-[#9aa8a0] mb-1 uppercase">
               // AVAILABLE INGREDIENTS OR SCRAPS
             </label>
             <input
@@ -122,12 +122,12 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
               value={ingredients}
               onChange={(e) => setIngredients(e.target.value)}
               placeholder="e.g. 2 eggs, leftover pasta, parmesan, tomato paste, butter"
-              className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-3.5 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#423322] transition-colors font-mono"
+              className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-3 sm:p-3.5 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#423322] transition-colors font-mono"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-mono text-[#9aa8a0] mb-1.5 uppercase">
+            <label className="block text-[10px] sm:text-xs font-mono text-[#9aa8a0] mb-1 uppercase">
               // DIETARY CONSTRAINTS (OPTIONAL)
             </label>
             <input
@@ -135,21 +135,21 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
               value={dietary}
               onChange={(e) => setDietary(e.target.value)}
               placeholder="e.g. Under 10 mins, High Protein, Zero Dishes, Vegetarian"
-              className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-3 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#423322] transition-colors font-mono"
+              className="w-full bg-[#0c0f0d] border border-[#202723] rounded-xl p-2.5 sm:p-3 text-xs text-[#edf2ee] placeholder:text-[#435249] focus:outline-none focus:border-[#423322] transition-colors font-mono"
             />
           </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-          <span className="text-xs font-mono text-[#76877e] flex items-center gap-1.5">
-            <ZapOff className="w-3.5 h-3.5 text-[#deb992]" />
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-1">
+          <span className="text-[10px] sm:text-xs font-mono text-[#76877e] flex items-center gap-1.5 justify-center sm:justify-start">
+            <ZapOff className="w-3.5 h-3.5 text-[#deb992] shrink-0" />
             CONSERVES ~30 MIN DELIBERATION LATENCY
           </span>
 
           <button
             onClick={handleCook}
             disabled={loading || !ingredients.trim()}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#634020] hover:bg-[#784e27] text-white font-mono font-bold text-xs border border-[#8f5d30] transition-colors disabled:opacity-50 cursor-pointer tactile-btn"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl bg-[#634020] hover:bg-[#784e27] text-white font-mono font-bold text-xs border border-[#8f5d30] transition-colors disabled:opacity-50 cursor-pointer tactile-btn"
           >
             {loading ? (
               <>
@@ -158,7 +158,7 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
               </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
+                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 <span>GENERATE 3-STEP FEAST</span>
               </>
             )}
@@ -167,17 +167,17 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
       </div>
 
       {result && (
-        <div className="bg-[#141916] border border-[#362a1c] rounded-2xl p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between pb-3.5 border-b border-[#202723]">
-            <div>
-              <h3 className="text-base font-bold text-[#edf2ee] flex items-center gap-2 font-sans">
+        <div className="bg-[#141916] border border-[#362a1c] rounded-xl sm:rounded-2xl p-3.5 sm:p-5 md:p-6 space-y-3.5 sm:space-y-4 animate-fade-in">
+          <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#202723]">
+            <div className="min-w-0">
+              <h3 className="text-sm sm:text-base font-bold text-[#edf2ee] flex items-center gap-2 font-sans truncate">
                 🍳 {result.recipeTitle}
               </h3>
-              <div className="flex items-center gap-2 text-xs font-mono text-[#deb992] mt-1">
-                <Timer className="w-3.5 h-3.5" />
-                <span>COOK TIME: ~{result.prepTimeMinutes} MIN</span>
+              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-mono text-[#deb992] mt-0.5">
+                <Timer className="w-3.5 h-3.5 shrink-0" />
+                <span>~{result.prepTimeMinutes} MIN</span>
                 <span>•</span>
-                <span>STEPS: {result.stepCount} MAX</span>
+                <span>{result.stepCount} STEPS</span>
               </div>
             </div>
 
@@ -200,25 +200,25 @@ export const FridgeChef: React.FC<FridgeChefProps> = ({ currentProvider, onEffor
           </div>
 
           {/* Steps */}
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-2.5">
             {result.lazySteps.map((step, idx) => (
               <div
                 key={idx}
-                className="bg-[#19201c] border border-[#222b26] rounded-xl p-4 flex items-start gap-3.5 text-xs text-[#cbd6cf]"
+                className="bg-[#19201c] border border-[#222b26] rounded-xl p-3 sm:p-3.5 flex items-start gap-2.5 sm:gap-3 text-xs text-[#cbd6cf]"
               >
-                <span className="font-mono text-[10px] text-[#deb992] bg-[#271f16] px-2 py-0.5 rounded border border-[#3d2e1f] shrink-0 mt-0.5">
+                <span className="font-mono text-[9px] sm:text-[10px] text-[#deb992] bg-[#271f16] px-1.5 py-0.5 rounded border border-[#3d2e1f] shrink-0 mt-0.5">
                   PHASE_0{idx + 1}
                 </span>
-                <p className="leading-relaxed font-sans font-medium text-[#cbd6cf]">{step}</p>
+                <p className="leading-relaxed font-sans font-medium text-[#cbd6cf] text-xs">{step}</p>
               </div>
             ))}
           </div>
 
           {/* Sloth Dishwashing Saving Protocol */}
-          <div className="p-4 rounded-xl bg-[#241c14] border border-[#3b2d20] text-xs text-[#deb992] flex items-start gap-3 font-mono">
-            <span className="text-base select-none">🦥</span>
+          <div className="p-3 sm:p-3.5 rounded-xl bg-[#241c14] border border-[#3b2d20] text-xs text-[#deb992] flex items-start gap-2.5 sm:gap-3 font-mono">
+            <span className="text-base select-none shrink-0">🦥</span>
             <div>
-              <strong className="font-bold text-[#edd2b6] block mb-0.5 uppercase tracking-wider text-[11px]">
+              <strong className="font-bold text-[#edd2b6] block mb-0.5 uppercase tracking-wider text-[10px] sm:text-[11px]">
                 SLOAN_DISHWASHING_PROTOCOL //
               </strong>
               <p className="text-[#deb992] font-sans leading-relaxed text-xs">{result.slothChefsTip}</p>
