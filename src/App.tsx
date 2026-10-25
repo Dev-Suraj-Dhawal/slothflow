@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   MessageSquare, 
   Mic, 
@@ -8,7 +8,9 @@ import {
   FileText, 
   CheckCircle,
   ExternalLink,
-  Layers
+  Layers,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 import { AIProvider, SlothMode, SlothStats } from './types';
 import { Header } from './components/Header';
@@ -35,6 +37,31 @@ export const App: React.FC = () => {
     tasksEliminated: 8,
     chillLevel: 94
   });
+
+  const navContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const checkScroll = () => {
+    const el = navContainerRef.current;
+    if (el) {
+      setCanScrollLeft(el.scrollLeft > 6);
+      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    window.addEventListener('resize', checkScroll);
+    return () => window.removeEventListener('resize', checkScroll);
+  }, []);
+
+  const scrollNav = (direction: 'left' | 'right') => {
+    const el = navContainerRef.current;
+    if (el) {
+      el.scrollBy({ left: direction === 'left' ? -180 : 180, behavior: 'smooth' });
+    }
+  };
 
   const handleEffortSaved = (minutes: number, calories: number) => {
     setStats((prev) => ({
@@ -96,7 +123,7 @@ export const App: React.FC = () => {
     {
       id: 'why-open' as SlothMode,
       label: 'Why Open AI Matters',
-      shortLabel: 'Manifesto',
+      shortLabel: 'Why Open AI',
       num: '06',
       icon: FileText,
       badge: 'MANIFESTO',
@@ -124,16 +151,45 @@ export const App: React.FC = () => {
         />
 
         {/* Tab Navigation Segmented Bar - Precision Responsive Tool Switcher */}
-        <div className="relative">
-          <div className="p-1 sm:p-1.5 rounded-xl bg-[#141916] border border-[#222b26] flex items-center gap-1 sm:gap-1.5 overflow-x-auto scrollbar-none shadow-sm overscroll-x-contain">
+        <div className="relative group">
+          {/* Scroll Nav Controls (Visible on smaller viewports when scrollable) */}
+          {canScrollLeft && (
+            <button
+              onClick={() => scrollNav('left')}
+              className="absolute left-1 top-1/2 -translate-y-1/2 z-20 md:hidden w-7 h-7 rounded-lg bg-[#141916]/95 border border-[#2b3a30] text-[#8edba6] flex items-center justify-center shadow-lg hover:bg-[#1d2621] transition-colors"
+              title="Scroll left"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+          )}
+
+          {canScrollRight && (
+            <button
+              onClick={() => scrollNav('right')}
+              className="absolute right-1 top-1/2 -translate-y-1/2 z-20 md:hidden w-7 h-7 rounded-lg bg-[#141916]/95 border border-[#2b3a30] text-[#8edba6] flex items-center justify-center shadow-lg hover:bg-[#1d2621] transition-colors"
+              title="Scroll right"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Nav Track: Grid across screens >= 768px (Zero overflow/clipping); Smooth swipe on mobile */}
+          <div
+            ref={navContainerRef}
+            onScroll={checkScroll}
+            className="p-1 sm:p-1.5 rounded-xl bg-[#141916] border border-[#222b26] flex md:grid md:grid-cols-6 items-center gap-1 sm:gap-1.5 overflow-x-auto md:overflow-x-visible scrollbar-none shadow-sm overscroll-x-contain"
+          >
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs font-mono font-medium whitespace-nowrap transition-colors tactile-btn cursor-pointer shrink-0 ${
+                  onClick={(e) => {
+                    setActiveTab(item.id);
+                    e.currentTarget.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                  }}
+                  className={`flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 rounded-lg text-xs font-mono font-medium whitespace-nowrap transition-colors tactile-btn cursor-pointer shrink-0 md:shrink md:w-full ${
                     isActive
                       ? 'bg-[#1d2621] text-[#edf2ee] border border-[#314237]'
                       : 'text-[#84948b] hover:text-[#edf2ee] hover:bg-[#181f1b] border border-transparent'
@@ -141,10 +197,10 @@ export const App: React.FC = () => {
                 >
                   <span className="text-[9px] sm:text-[10px] text-[#4d5f55] font-mono">{item.num}</span>
                   <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#4eb374]' : 'text-[#6c7d74]'}`} />
-                  <span className="hidden sm:inline">{item.label}</span>
-                  <span className="inline sm:hidden">{item.shortLabel}</span>
+                  <span className="hidden xl:inline">{item.label}</span>
+                  <span className="inline xl:hidden">{item.shortLabel}</span>
                   {item.badge && (
-                    <span className={`text-[8px] sm:text-[9px] px-1 sm:px-1.5 py-0.2 rounded font-mono border hidden md:inline ${
+                    <span className={`text-[8px] sm:text-[9px] px-1 sm:px-1.5 py-0.2 rounded font-mono border hidden xl:inline ${
                       isActive 
                         ? item.badgeColor 
                         : 'bg-[#18201c] text-[#6c7d74] border-[#222c26]'
