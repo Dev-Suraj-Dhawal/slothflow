@@ -12,6 +12,8 @@
 > **"Channel your inner sloth. Build something with open-source AI that does the work so you don't have to."**
 > Built in honor of **International Sloth Day** and **Sloan the Sloth** (DEV's mascot).
 
+![SlothFlow Header & Navigation Hero](./nav_hero.png)
+
 ---
 
 ## 🌟 Overview

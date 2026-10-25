@@ -6,6 +6,8 @@ tags: devchallenge, hf26challenge, opensource, ai
 
 *This is a submission for the [Hacktoberfest Open-Source AI Challenge Week 3: Slow and Steady](https://dev.to/challenges/hacktoberfest-week3-2026-10-19)*
 
+![SlothFlow Header & Navigation Hero](https://raw.githubusercontent.com/Dev-Suraj-Dhawal/slothflow/main/nav_hero.png)
+
 ## What I Built
 
 SlothFlow AI is a client-first, zero-subscription-cost suite of anti-effort utilities engineered for anyone who wants to channel their inner sloth on International Sloth Day.
