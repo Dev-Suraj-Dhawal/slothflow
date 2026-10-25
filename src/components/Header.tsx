@@ -3,7 +3,6 @@ import {
   Sparkles, 
   Volume2, 
   VolumeX, 
-  Cpu, 
   ShieldCheck, 
   ZapOff,
   Flame,
@@ -32,29 +31,37 @@ export const Header: React.FC<HeaderProps> = ({
         return {
           label: 'In-Browser WebGPU',
           tech: 'Qwen2.5 / ONNX Web',
-          color: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30 hover:border-emerald-500/50',
-          dot: 'bg-emerald-400'
+          bg: 'bg-[#18261e]',
+          border: 'border-[#284232]',
+          text: 'text-[#9ed4b0]',
+          dot: 'bg-[#55b376]'
         };
       case 'local-ollama':
         return {
-          label: 'Local Ollama Daemon',
+          label: 'Local Ollama',
           tech: 'localhost:11434',
-          color: 'bg-cyan-500/10 text-cyan-300 border-cyan-500/30 hover:border-cyan-500/50',
-          dot: 'bg-cyan-400'
+          bg: 'bg-[#192426]',
+          border: 'border-[#273d42]',
+          text: 'text-[#96cfd9]',
+          dot: 'bg-[#4faab8]'
         };
       case 'distilled-sloth':
         return {
           label: 'Distilled Heuristics',
-          tech: '0ms Latency',
-          color: 'bg-amber-500/10 text-amber-300 border-amber-500/30 hover:border-amber-500/50',
-          dot: 'bg-amber-400'
+          tech: '50ms Response',
+          bg: 'bg-[#2b2218]',
+          border: 'border-[#473624]',
+          text: 'text-[#e0b889]',
+          dot: 'bg-[#c28f53]'
         };
       case 'huggingface-api':
         return {
           label: 'Hugging Face Hub',
-          tech: 'Open Model Router',
-          color: 'bg-purple-500/10 text-purple-300 border-purple-500/30 hover:border-purple-500/50',
-          dot: 'bg-purple-400'
+          tech: 'Remote Open Weights',
+          bg: 'bg-[#231e2e]',
+          border: 'border-[#3a304d]',
+          text: 'text-[#beafdc]',
+          dot: 'bg-[#9882c4]'
         };
     }
   };
@@ -62,52 +69,53 @@ export const Header: React.FC<HeaderProps> = ({
   const badge = getProviderBadge();
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/[0.07] bg-[#07090e]/85 backdrop-blur-xl px-4 sm:px-8 py-3 transition-colors">
+    <header className="sticky top-0 z-40 border-b border-[#242d29] bg-[#161b19] px-4 sm:px-8 py-3">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
         {/* Brand & Mascot */}
         <div className="flex items-center gap-3">
-          <div className="relative group cursor-pointer" onClick={onOpenEngineModal}>
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600/90 via-teal-700/80 to-slate-900 flex items-center justify-center text-xl shadow-lg shadow-emerald-950/60 border border-emerald-500/30 group-hover:scale-105 transition-all">
-              🦥
-            </div>
-            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#07090e] animate-pulse" />
-          </div>
+          <button 
+            onClick={onOpenEngineModal}
+            className="w-10 h-10 rounded-xl bg-[#222b27] border border-[#2e3b35] flex items-center justify-center text-xl hover:bg-[#28332e] transition-colors cursor-pointer select-none"
+            title="Inspect AI Engine"
+          >
+            🦥
+          </button>
 
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-1.5 font-sans">
+              <h1 className="text-base font-bold tracking-tight text-[#f0f3f1] flex items-center gap-1.5 font-sans">
                 SlothFlow
-                <span className="text-[10px] font-extrabold tracking-wider uppercase px-1.5 py-0.5 rounded-md bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                <span className="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-[#1c2a22] text-[#9ed4b0] border border-[#2b4234]">
                   AI
                 </span>
               </h1>
-              <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide text-amber-300/90 uppercase px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20">
-                <Sparkles className="w-2.5 h-2.5 text-amber-400" /> Slow & Steady
+              <span className="hidden md:inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide text-[#d9ba96] uppercase px-2 py-0.5 rounded-full bg-[#2a221a] border border-[#423426]">
+                <Sparkles className="w-2.5 h-2.5 text-[#c79b6d]" /> Slow & Steady
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium tracking-tight">
-              Open-weight AI that does the dread work so you can relax.
+            <p className="text-[11px] text-[#8e9c95] font-medium">
+              Open-source AI that does the dread work so you can relax.
             </p>
           </div>
         </div>
 
         {/* Center: Precision Telemetry / Laziness Metrics */}
-        <div className="hidden lg:flex items-center gap-3.5 bg-slate-900/60 border border-white/[0.08] rounded-xl px-4 py-1.5 text-xs text-slate-300 shadow-inner">
-          <div className="flex items-center gap-1.5 text-emerald-400 font-medium">
-            <ZapOff className="w-3.5 h-3.5 text-emerald-400/90" />
-            <span className="font-bold tabular-nums text-white">{stats.timeSavedMinutes}m</span>
-            <span className="text-slate-400 text-[11px]">Effort Eliminated</span>
+        <div className="hidden lg:flex items-center gap-4 bg-[#1b221f] border border-[#26312c] rounded-xl px-4 py-1.5 text-xs text-[#a0ada6]">
+          <div className="flex items-center gap-1.5 font-medium">
+            <ZapOff className="w-3.5 h-3.5 text-[#55b376]" />
+            <span className="font-bold tabular-nums text-[#f0f3f1]">{stats.timeSavedMinutes}m</span>
+            <span className="text-[#7c8a83] text-[11px]">Effort Saved</span>
           </div>
-          <div className="w-px h-3 bg-white/10" />
-          <div className="flex items-center gap-1.5 text-amber-400 font-medium">
-            <Flame className="w-3.5 h-3.5 text-amber-400/90" />
-            <span className="font-bold tabular-nums text-white">{stats.caloriesConserved}</span>
-            <span className="text-slate-400 text-[11px]">kcal Conserved</span>
+          <div className="w-px h-3.5 bg-[#2a3630]" />
+          <div className="flex items-center gap-1.5 font-medium">
+            <Flame className="w-3.5 h-3.5 text-[#c79b6d]" />
+            <span className="font-bold tabular-nums text-[#f0f3f1]">{stats.caloriesConserved}</span>
+            <span className="text-[#7c8a83] text-[11px]">kcal Conserved</span>
           </div>
-          <div className="w-px h-3 bg-white/10" />
-          <div className="flex items-center gap-1.5 text-teal-300 font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-teal-400" />
-            <span className="text-slate-300 text-[11px]">100% Private (WebGPU)</span>
+          <div className="w-px h-3.5 bg-[#2a3630]" />
+          <div className="flex items-center gap-1.5 font-medium text-[#8ac7ab]">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#55b376]" />
+            <span className="text-[11px]">100% Private (WebGPU)</span>
           </div>
         </div>
 
@@ -116,13 +124,13 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Active Provider Selector Button */}
           <button
             onClick={onOpenEngineModal}
-            className={`flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer shadow-sm ${badge.color}`}
+            className={`flex items-center gap-2 px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors cursor-pointer ${badge.bg} ${badge.border} ${badge.text}`}
             title="Inspect or Switch Open-Source Engine"
           >
-            <span className={`w-2 h-2 rounded-full ${badge.dot} animate-pulse`} />
+            <span className={`w-2 h-2 rounded-full ${badge.dot}`} />
             <div className="text-left hidden sm:block">
               <div className="font-semibold leading-tight">{badge.label}</div>
-              <div className="text-[9px] text-slate-400 font-mono leading-none">{badge.tech}</div>
+              <div className="text-[9px] text-[#7d8b84] font-mono leading-none">{badge.tech}</div>
             </div>
             <ChevronDown className="w-3 h-3 opacity-60 hidden sm:block" />
           </button>
@@ -130,23 +138,23 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Ambient Procedural Soundscape Toggle */}
           <button
             onClick={onToggleSoundBar}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-all cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-medium transition-colors cursor-pointer ${
               isSoundActive 
-                ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40 shadow-sm shadow-emerald-950/50' 
-                : 'bg-slate-900/80 text-slate-400 border-white/[0.08] hover:text-slate-200 hover:border-white/15'
+                ? 'bg-[#1b2a22] text-[#9ed4b0] border-[#2f4939]' 
+                : 'bg-[#1c2320] text-[#8e9c95] border-[#28332e] hover:text-[#f0f3f1] hover:bg-[#222b27]'
             }`}
             title="Offline Procedural Ambient Soundscape (Rain, Forest, Brown Noise)"
           >
             {isSoundActive ? (
               <>
-                <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+                <Volume2 className="w-3.5 h-3.5 text-[#55b376]" />
                 <span className="hidden sm:inline">Soundscape</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#55b376]" />
               </>
             ) : (
               <>
                 <VolumeX className="w-3.5 h-3.5 opacity-70" />
-                <span className="hidden sm:inline text-slate-400">Ambient</span>
+                <span className="hidden sm:inline">Ambient</span>
               </>
             )}
           </button>
@@ -156,7 +164,7 @@ export const Header: React.FC<HeaderProps> = ({
             href="https://github.com/Dev-Suraj-Dhawal/slothflow"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border border-white/[0.08] bg-slate-900/80 text-slate-300 hover:text-white hover:border-white/20 text-xs font-medium transition-all"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#28332e] bg-[#1c2320] text-[#a0ada6] hover:text-[#f0f3f1] hover:bg-[#222b27] text-xs font-medium transition-colors"
             title="View Open-Source Repository on GitHub"
           >
             <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">

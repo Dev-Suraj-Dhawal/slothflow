@@ -7,7 +7,6 @@ import {
   VolumeX, 
   Volume2, 
   BellRing,
-  Sparkles,
   Sliders
 } from 'lucide-react';
 import { soundEngine } from '../services/soundEngine';
@@ -66,46 +65,46 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-[#0a0e16]/95 border border-white/[0.12] rounded-2xl p-5 shadow-2xl backdrop-blur-2xl animate-fade-in glass-card">
-      <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08] mb-3.5">
+    <div className="fixed bottom-4 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-96 bg-[#161b19] border border-[#242d29] rounded-2xl p-5 shadow-2xl animate-fade-in">
+      <div className="flex items-center justify-between pb-3.5 border-b border-[#242d29] mb-3.5">
         <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+          <div className="p-1.5 rounded-xl bg-[#1c2a22] text-[#55b376] border border-[#2b4234]">
             <Sliders className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs font-bold text-white tracking-wide uppercase">
+            <h3 className="text-xs font-bold text-[#f0f3f1] tracking-wide uppercase">
               Offline Procedural Soundscape
             </h3>
-            <p className="text-[10px] text-slate-400 font-mono">
-              Web Audio API • 0 MP3s • Infinite Generative
+            <p className="text-[10px] text-[#8e9c95] font-mono">
+              Web Audio API • 0 MP3s • Generative Synthesis
             </p>
           </div>
         </div>
         <button
           onClick={onClose}
-          className="text-slate-400 hover:text-white text-xs px-2 py-0.5 rounded-lg bg-slate-900 border border-white/5 hover:bg-slate-800 transition-colors cursor-pointer"
+          className="text-[#8e9c95] hover:text-[#f0f3f1] text-xs px-2 py-0.5 rounded-lg bg-[#1c2320] border border-[#28332e] hover:bg-[#232c28] transition-colors cursor-pointer"
         >
           ✕
         </button>
       </div>
 
-      {/* Preset Pills */}
+      {/* Preset Pills - Solid Natural */}
       <div className="flex items-center gap-1.5 mb-3.5 overflow-x-auto pb-1 text-[11px] scrollbar-none">
         <button
           onClick={() => setPreset('zen-canopy')}
-          className="px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/20 whitespace-nowrap transition-colors cursor-pointer font-medium"
+          className="px-2.5 py-1 rounded-lg bg-[#1c2a22] border border-[#2b4234] text-[#9ed4b0] hover:bg-[#23362b] whitespace-nowrap transition-colors cursor-pointer font-medium"
         >
           🌿 Zen Canopy
         </button>
         <button
           onClick={() => setPreset('rainy-tent')}
-          className="px-2.5 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 hover:bg-cyan-500/20 whitespace-nowrap transition-colors cursor-pointer font-medium"
+          className="px-2.5 py-1 rounded-lg bg-[#192426] border border-[#273d42] text-[#96cfd9] hover:bg-[#223336] whitespace-nowrap transition-colors cursor-pointer font-medium"
         >
           🌧️ Rainforest Tent
         </button>
         <button
           onClick={() => setPreset('deep-sleep')}
-          className="px-2.5 py-1 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-300 hover:bg-amber-500/20 whitespace-nowrap transition-colors cursor-pointer font-medium"
+          className="px-2.5 py-1 rounded-lg bg-[#29221a] border border-[#423425] text-[#deb687] hover:bg-[#362b20] whitespace-nowrap transition-colors cursor-pointer font-medium"
         >
           ☕ Warm Brown Noise
         </button>
@@ -115,9 +114,9 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
       <div className="space-y-3">
         {/* Rain */}
         <div className="flex items-center justify-between gap-3 text-xs">
-          <span className="flex items-center gap-1.5 text-slate-300 w-24 shrink-0 font-medium">
-            <CloudRain className="w-3.5 h-3.5 text-cyan-400" /> Rain
-            {volumes.rain > 0 && <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse ml-0.5" />}
+          <span className="flex items-center gap-1.5 text-[#c7d1cc] w-24 shrink-0 font-medium">
+            <CloudRain className="w-3.5 h-3.5 text-[#96cfd9]" /> Rain
+            {volumes.rain > 0 && <span className="w-1.5 h-1.5 rounded-full bg-[#52a1b0] ml-0.5" />}
           </span>
           <input
             type="range"
@@ -126,18 +125,18 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
             step="0.05"
             value={volumes.rain}
             onChange={(e) => handleVolumeChange('rain', parseFloat(e.target.value))}
-            className="flex-1 accent-emerald-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer"
+            className="flex-1 accent-[#2b613b] h-1.5 bg-[#101413] rounded-lg cursor-pointer"
           />
-          <span className="text-[11px] text-slate-400 font-mono w-8 text-right">
+          <span className="text-[11px] text-[#8e9c95] font-mono w-8 text-right">
             {Math.round(volumes.rain * 100)}%
           </span>
         </div>
 
         {/* Thunder */}
         <div className="flex items-center justify-between gap-3 text-xs">
-          <span className="flex items-center gap-1.5 text-slate-300 w-24 shrink-0 font-medium">
-            <Zap className="w-3.5 h-3.5 text-amber-400" /> Thunder
-            {volumes.thunder > 0 && <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse ml-0.5" />}
+          <span className="flex items-center gap-1.5 text-[#c7d1cc] w-24 shrink-0 font-medium">
+            <Zap className="w-3.5 h-3.5 text-[#deb687]" /> Thunder
+            {volumes.thunder > 0 && <span className="w-1.5 h-1.5 rounded-full bg-[#c79b6d] ml-0.5" />}
           </span>
           <input
             type="range"
@@ -146,18 +145,18 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
             step="0.05"
             value={volumes.thunder}
             onChange={(e) => handleVolumeChange('thunder', parseFloat(e.target.value))}
-            className="flex-1 accent-emerald-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer"
+            className="flex-1 accent-[#7a4d26] h-1.5 bg-[#101413] rounded-lg cursor-pointer"
           />
-          <span className="text-[11px] text-slate-400 font-mono w-8 text-right">
+          <span className="text-[11px] text-[#8e9c95] font-mono w-8 text-right">
             {Math.round(volumes.thunder * 100)}%
           </span>
         </div>
 
         {/* Forest */}
         <div className="flex items-center justify-between gap-3 text-xs">
-          <span className="flex items-center gap-1.5 text-slate-300 w-24 shrink-0 font-medium">
-            <Trees className="w-3.5 h-3.5 text-emerald-400" /> Forest
-            {volumes.forest > 0 && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />}
+          <span className="flex items-center gap-1.5 text-[#c7d1cc] w-24 shrink-0 font-medium">
+            <Trees className="w-3.5 h-3.5 text-[#55b376]" /> Forest
+            {volumes.forest > 0 && <span className="w-1.5 h-1.5 rounded-full bg-[#55b376] ml-0.5" />}
           </span>
           <input
             type="range"
@@ -166,18 +165,18 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
             step="0.05"
             value={volumes.forest}
             onChange={(e) => handleVolumeChange('forest', parseFloat(e.target.value))}
-            className="flex-1 accent-emerald-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer"
+            className="flex-1 accent-[#2b613b] h-1.5 bg-[#101413] rounded-lg cursor-pointer"
           />
-          <span className="text-[11px] text-slate-400 font-mono w-8 text-right">
+          <span className="text-[11px] text-[#8e9c95] font-mono w-8 text-right">
             {Math.round(volumes.forest * 100)}%
           </span>
         </div>
 
         {/* Brown Noise */}
         <div className="flex items-center justify-between gap-3 text-xs">
-          <span className="flex items-center gap-1.5 text-slate-300 w-24 shrink-0 font-medium">
-            <Waves className="w-3.5 h-3.5 text-purple-400" /> Brown Noise
-            {volumes['brown-noise'] > 0 && <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse ml-0.5" />}
+          <span className="flex items-center gap-1.5 text-[#c7d1cc] w-24 shrink-0 font-medium">
+            <Waves className="w-3.5 h-3.5 text-[#c3b4de]" /> Brown Noise
+            {volumes['brown-noise'] > 0 && <span className="w-1.5 h-1.5 rounded-full bg-[#9882c4] ml-0.5" />}
           </span>
           <input
             type="range"
@@ -186,28 +185,28 @@ export const SoundBar: React.FC<SoundBarProps> = ({ isOpen, onClose }) => {
             step="0.05"
             value={volumes['brown-noise']}
             onChange={(e) => handleVolumeChange('brown-noise', parseFloat(e.target.value))}
-            className="flex-1 accent-emerald-500 h-1.5 bg-slate-800 rounded-lg cursor-pointer"
+            className="flex-1 accent-[#483861] h-1.5 bg-[#101413] rounded-lg cursor-pointer"
           />
-          <span className="text-[11px] text-slate-400 font-mono w-8 text-right">
+          <span className="text-[11px] text-[#8e9c95] font-mono w-8 text-right">
             {Math.round(volumes['brown-noise'] * 100)}%
           </span>
         </div>
       </div>
 
       {/* Footer controls */}
-      <div className="flex items-center justify-between pt-3.5 mt-3.5 border-t border-white/[0.08] text-xs">
+      <div className="flex items-center justify-between pt-3.5 mt-3.5 border-t border-[#242d29] text-xs">
         <button
           onClick={handleChime}
-          className="text-slate-300 hover:text-white flex items-center gap-1.5 bg-slate-900/90 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-white/[0.08] transition-colors cursor-pointer"
+          className="text-[#a0ada6] hover:text-[#f0f3f1] flex items-center gap-1.5 bg-[#1c2320] hover:bg-[#232c28] px-3 py-1.5 rounded-xl border border-[#28332e] transition-colors cursor-pointer"
           title="Play 528Hz calming completion tone"
         >
-          <BellRing className="w-3.5 h-3.5 text-amber-400" />
+          <BellRing className="w-3.5 h-3.5 text-[#deb687]" />
           <span>528Hz Chime</span>
         </button>
 
         <button
           onClick={handleMuteAll}
-          className="text-rose-400 hover:text-rose-300 flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-rose-500/10 transition-colors cursor-pointer"
+          className="text-[#cf8e8e] hover:text-[#e8aaaa] flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-[#261c1c] transition-colors cursor-pointer"
         >
           <VolumeX className="w-3.5 h-3.5" />
           <span>Silence All</span>

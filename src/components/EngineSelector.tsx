@@ -9,8 +9,7 @@ import {
   ExternalLink,
   Shield,
   Layers,
-  Sparkles,
-  Terminal
+  Sparkles
 } from 'lucide-react';
 import { AIProvider } from '../types';
 import { openAiService } from '../services/openAiService';
@@ -64,17 +63,17 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
   };
 
   return (
-    <div className="bg-[#0a0e16]/95 border border-white/[0.12] rounded-3xl p-6 sm:p-7 shadow-2xl max-w-2xl w-full mx-auto backdrop-blur-2xl">
-      <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-5">
+    <div className="bg-[#161b19] border border-[#242d29] rounded-2xl p-6 sm:p-7 max-w-2xl w-full mx-auto shadow-xl">
+      <div className="flex items-center justify-between pb-4 border-b border-[#242d29] mb-5">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <div className="p-2 rounded-xl bg-[#1c2a22] text-[#55b376] border border-[#2b4234]">
             <Cpu className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-[#f0f3f1] flex items-center gap-2">
               Select Open-Source AI Engine
             </h2>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#8e9c95]">
               Pick where and how the open-weight models execute. 100% transparent.
             </p>
           </div>
@@ -83,39 +82,39 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
         {onClose && (
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white text-xs px-2.5 py-1 rounded-xl bg-slate-900 border border-white/[0.08] hover:bg-slate-800 transition-colors cursor-pointer"
+            className="text-[#8e9c95] hover:text-[#f0f3f1] text-xs px-2.5 py-1 rounded-xl bg-[#1c2320] border border-[#28332e] hover:bg-[#232c28] transition-colors cursor-pointer"
           >
             Close
           </button>
         )}
       </div>
 
-      {/* Grid of Providers */}
+      {/* Grid of Providers - Clean Flat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-5">
         {/* 1. Browser Transformers */}
         <div
           onClick={() => onSelectProvider('browser-transformers')}
-          className={`cursor-pointer rounded-2xl p-4 border transition-all ${
+          className={`cursor-pointer rounded-xl p-4 border transition-colors ${
             currentProvider === 'browser-transformers'
-              ? 'bg-emerald-500/15 border-emerald-500/60 shadow-lg shadow-emerald-950/50 ring-1 ring-emerald-500/40'
-              : 'bg-[#07090e]/70 border-white/[0.06] hover:border-white/[0.14]'
+              ? 'bg-[#1c2a22] border-[#3a5744]'
+              : 'bg-[#1b221f] border-[#26312c] hover:border-[#33423b]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="flex items-center gap-2 text-xs font-bold text-white">
-              <Sparkles className="w-4 h-4 text-emerald-400" />
+            <span className="flex items-center gap-2 text-xs font-bold text-[#f0f3f1]">
+              <Sparkles className="w-4 h-4 text-[#55b376]" />
               In-Browser WebGPU Open Weights
             </span>
             {currentProvider === 'browser-transformers' && (
-              <span className="p-0.5 rounded-full bg-emerald-500 text-black">
+              <span className="p-0.5 rounded-full bg-[#55b376] text-black">
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
               </span>
             )}
           </div>
-          <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
+          <p className="text-[11px] text-[#8e9c95] mb-2 leading-relaxed">
             Runs client-side via Transformers.js v3 + ONNX Runtime Web. Zero server calls, zero data leaves your browser.
           </p>
-          <div className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-[10px] text-[#9ed4b0] font-semibold uppercase tracking-wider">
             <Shield className="w-3 h-3" /> 100% In-Browser Privacy
           </div>
         </div>
@@ -123,27 +122,27 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
         {/* 2. Local Desktop Ollama */}
         <div
           onClick={() => onSelectProvider('local-ollama')}
-          className={`cursor-pointer rounded-2xl p-4 border transition-all ${
+          className={`cursor-pointer rounded-xl p-4 border transition-colors ${
             currentProvider === 'local-ollama'
-              ? 'bg-cyan-500/15 border-cyan-500/60 shadow-lg shadow-cyan-950/50 ring-1 ring-cyan-500/40'
-              : 'bg-[#07090e]/70 border-white/[0.06] hover:border-white/[0.14]'
+              ? 'bg-[#192426] border-[#2c474d]'
+              : 'bg-[#1b221f] border-[#26312c] hover:border-[#33423b]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="flex items-center gap-2 text-xs font-bold text-white">
-              <HardDrive className="w-4 h-4 text-cyan-400" />
+            <span className="flex items-center gap-2 text-xs font-bold text-[#f0f3f1]">
+              <HardDrive className="w-4 h-4 text-[#96cfd9]" />
               Local Desktop (Ollama)
             </span>
             {currentProvider === 'local-ollama' && (
-              <span className="p-0.5 rounded-full bg-cyan-500 text-black">
+              <span className="p-0.5 rounded-full bg-[#4faab8] text-black">
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
               </span>
             )}
           </div>
-          <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
-            Connect to your local Ollama daemon (<code className="text-cyan-300 font-mono">localhost:11434</code>) for Llama 3.2, SmolLM, or Mistral.
+          <p className="text-[11px] text-[#8e9c95] mb-2 leading-relaxed">
+            Connect to your local Ollama daemon (<code className="text-[#96cfd9] font-mono">localhost:11434</code>) for Llama 3.2, SmolLM, or Mistral.
           </p>
-          <div className="flex items-center gap-1.5 text-[10px] text-cyan-400 font-semibold uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-[10px] text-[#96cfd9] font-semibold uppercase tracking-wider">
             <Layers className="w-3 h-3" /> Full Local GPU Acceleration
           </div>
         </div>
@@ -151,27 +150,27 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
         {/* 3. Distilled Sloth */}
         <div
           onClick={() => onSelectProvider('distilled-sloth')}
-          className={`cursor-pointer rounded-2xl p-4 border transition-all ${
+          className={`cursor-pointer rounded-xl p-4 border transition-colors ${
             currentProvider === 'distilled-sloth'
-              ? 'bg-amber-500/15 border-amber-500/60 shadow-lg shadow-amber-950/50 ring-1 ring-amber-500/40'
-              : 'bg-[#07090e]/70 border-white/[0.06] hover:border-white/[0.14]'
+              ? 'bg-[#29221a] border-[#473624]'
+              : 'bg-[#1b221f] border-[#26312c] hover:border-[#33423b]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="flex items-center gap-2 text-xs font-bold text-white">
-              <Zap className="w-4 h-4 text-amber-400" />
+            <span className="flex items-center gap-2 text-xs font-bold text-[#f0f3f1]">
+              <Zap className="w-4 h-4 text-[#deb687]" />
               Distilled Sloth (Instant)
             </span>
             {currentProvider === 'distilled-sloth' && (
-              <span className="p-0.5 rounded-full bg-amber-500 text-black">
+              <span className="p-0.5 rounded-full bg-[#c28f53] text-black">
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
               </span>
             )}
           </div>
-          <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
+          <p className="text-[11px] text-[#8e9c95] mb-2 leading-relaxed">
             Zero model download, 0ms latency. Pure client heuristics distilled from open models for slow/low-spec devices.
           </p>
-          <div className="flex items-center gap-1.5 text-[10px] text-amber-400 font-semibold uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-[10px] text-[#deb687] font-semibold uppercase tracking-wider">
             ⚡ Instant Response (<span className="font-mono">50ms</span>)
           </div>
         </div>
@@ -179,27 +178,27 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
         {/* 4. Hugging Face Hub API */}
         <div
           onClick={() => onSelectProvider('huggingface-api')}
-          className={`cursor-pointer rounded-2xl p-4 border transition-all ${
+          className={`cursor-pointer rounded-xl p-4 border transition-colors ${
             currentProvider === 'huggingface-api'
-              ? 'bg-purple-500/15 border-purple-500/60 shadow-lg shadow-purple-950/50 ring-1 ring-purple-500/40'
-              : 'bg-[#07090e]/70 border-white/[0.06] hover:border-white/[0.14]'
+              ? 'bg-[#251f30] border-[#3f3054]'
+              : 'bg-[#1b221f] border-[#26312c] hover:border-[#33423b]'
           }`}
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="flex items-center gap-2 text-xs font-bold text-white">
-              <Globe className="w-4 h-4 text-purple-400" />
+            <span className="flex items-center gap-2 text-xs font-bold text-[#f0f3f1]">
+              <Globe className="w-4 h-4 text-[#c3b4de]" />
               Hugging Face Hub API
             </span>
             {currentProvider === 'huggingface-api' && (
-              <span className="p-0.5 rounded-full bg-purple-500 text-black">
+              <span className="p-0.5 rounded-full bg-[#9882c4] text-black">
                 <Check className="w-3.5 h-3.5 stroke-[3]" />
               </span>
             )}
           </div>
-          <p className="text-[11px] text-slate-400 mb-2 leading-relaxed">
+          <p className="text-[11px] text-[#8e9c95] mb-2 leading-relaxed">
             Cloud open inference with your Hugging Face User Access Token for 70B+ open models.
           </p>
-          <div className="flex items-center gap-1.5 text-[10px] text-purple-400 font-semibold uppercase tracking-wider">
+          <div className="flex items-center gap-1.5 text-[10px] text-[#c3b4de] font-semibold uppercase tracking-wider">
             🌐 Remote Open Weights
           </div>
         </div>
@@ -207,8 +206,8 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
 
       {/* Ollama Configuration Panel when active */}
       {currentProvider === 'local-ollama' && (
-        <div className="bg-[#07090e]/90 border border-cyan-500/30 rounded-2xl p-4 mb-4">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-2 flex items-center gap-1.5">
+        <div className="bg-[#101413] border border-[#242d29] rounded-xl p-4 mb-4">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#96cfd9] mb-2 flex items-center gap-1.5">
             <HardDrive className="w-3.5 h-3.5" /> Ollama Endpoint Settings
           </h3>
           <div className="flex gap-2 mb-3">
@@ -217,12 +216,12 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
               value={ollamaUrl}
               onChange={(e) => setOllamaUrl(e.target.value)}
               placeholder="http://localhost:11434"
-              className="flex-1 bg-slate-900 border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-slate-200 font-mono focus:outline-none focus:border-cyan-500"
+              className="flex-1 bg-[#161b19] border border-[#26312c] rounded-xl px-3 py-2 text-xs text-[#edf1ef] font-mono focus:outline-none focus:border-[#385954]"
             />
             <button
               onClick={handleTestOllama}
               disabled={testingOllama}
-              className="bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs px-3.5 py-2 rounded-xl transition-all disabled:opacity-50 cursor-pointer"
+              className="bg-[#23505c] hover:bg-[#2b6170] text-white font-bold text-xs px-3.5 py-2 rounded-xl border border-[#357587] transition-colors disabled:opacity-50 cursor-pointer"
             >
               {testingOllama ? 'Probing...' : 'Test Connection'}
             </button>
@@ -231,19 +230,19 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
           {ollamaStatus.tested && (
             <div className={`p-3 rounded-xl text-xs border ${
               ollamaStatus.online 
-                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300' 
-                : 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                ? 'bg-[#18261e] border-[#2b4234] text-[#9ed4b0]' 
+                : 'bg-[#2b2218] border-[#473624] text-[#deb687]'
             }`}>
               {ollamaStatus.online ? (
                 <div>
                   <p className="font-bold mb-1">✓ Ollama connected successfully!</p>
                   {ollamaStatus.models.length > 0 ? (
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="text-slate-400">Available models:</span>
+                      <span className="text-[#8e9c95]">Available models:</span>
                       <select
                         value={selectedModel}
                         onChange={(e) => handleSelectModel(e.target.value)}
-                        className="bg-slate-900 border border-white/20 rounded-lg px-2.5 py-1 text-slate-200 font-mono text-xs"
+                        className="bg-[#1b221f] border border-[#2a3630] rounded-lg px-2.5 py-1 text-[#f0f3f1] font-mono text-xs"
                       >
                         {ollamaStatus.models.map((m) => (
                           <option key={m} value={m}>{m}</option>
@@ -251,16 +250,16 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
                       </select>
                     </div>
                   ) : (
-                    <p className="text-[11px] text-slate-400">No models found yet. Run <code className="text-cyan-300 font-mono">ollama run llama3.2</code> in your terminal.</p>
+                    <p className="text-[11px] text-[#8e9c95]">No models found yet. Run <code className="text-[#96cfd9] font-mono">ollama run llama3.2</code> in your terminal.</p>
                   )}
                 </div>
               ) : (
                 <div className="flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 shrink-0 text-amber-400 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 shrink-0 text-[#deb687] mt-0.5" />
                   <div>
                     <p className="font-bold">Ollama is not running at this address.</p>
-                    <p className="text-[11px] text-slate-400 mt-0.5">
-                      Install from <a href="https://ollama.com" target="_blank" rel="noreferrer" className="underline text-cyan-400">ollama.com</a> or use the <strong>In-Browser WebGPU</strong> engine above for zero-install open AI!
+                    <p className="text-[11px] text-[#8e9c95] mt-0.5">
+                      Install from <a href="https://ollama.com" target="_blank" rel="noreferrer" className="underline text-[#96cfd9]">ollama.com</a> or use the <strong>In-Browser WebGPU</strong> engine above for zero-install open AI!
                     </p>
                   </div>
                 </div>
@@ -272,8 +271,8 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
 
       {/* Hugging Face Key Panel when active */}
       {currentProvider === 'huggingface-api' && (
-        <div className="bg-[#07090e]/90 border border-purple-500/30 rounded-2xl p-4 mb-4">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-purple-400 mb-2 flex items-center gap-1.5">
+        <div className="bg-[#101413] border border-[#242d29] rounded-xl p-4 mb-4">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-[#c3b4de] mb-2 flex items-center gap-1.5">
             <Globe className="w-3.5 h-3.5" /> Hugging Face User Access Token (Optional)
           </h3>
           <input
@@ -284,24 +283,24 @@ export const EngineSelector: React.FC<EngineSelectorProps> = ({
               openAiService.setHfApiKey(e.target.value);
             }}
             placeholder="hf_..."
-            className="w-full bg-slate-900 border border-white/[0.1] rounded-xl px-3 py-2 text-xs text-slate-200 font-mono focus:outline-none focus:border-purple-500 mb-1.5"
+            className="w-full bg-[#161b19] border border-[#26312c] rounded-xl px-3 py-2 text-xs text-[#edf1ef] font-mono focus:outline-none focus:border-[#483c5e] mb-1.5"
           />
-          <p className="text-[11px] text-slate-400">
-            Get your free token from <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noreferrer" className="underline text-purple-400">huggingface.co/settings/tokens</a>.
+          <p className="text-[11px] text-[#8e9c95]">
+            Get your free token from <a href="https://huggingface.co/settings/tokens" target="_blank" rel="noreferrer" className="underline text-[#c3b4de]">huggingface.co/settings/tokens</a>.
           </p>
         </div>
       )}
 
       {/* Bottom callout */}
-      <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.06] text-xs text-slate-300 flex items-center justify-between">
+      <div className="p-3.5 rounded-xl bg-[#101413] border border-[#242d29] text-xs text-[#8e9c95] flex items-center justify-between">
         <span className="flex items-center gap-2">
-          <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
+          <Shield className="w-4 h-4 text-[#55b376] shrink-0" />
           <span>Every option is strictly built on open weights with no proprietary walled gardens.</span>
         </span>
         <a 
           href="#why-open" 
           onClick={onClose}
-          className="text-emerald-400 hover:underline flex items-center gap-1 shrink-0 ml-3 font-semibold"
+          className="text-[#9ed4b0] hover:underline flex items-center gap-1 shrink-0 ml-3 font-semibold"
         >
           Read manifesto <ExternalLink className="w-3 h-3" />
         </a>

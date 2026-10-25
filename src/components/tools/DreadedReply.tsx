@@ -52,10 +52,10 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
       setResult(res);
       soundEngine.playGentleChime();
       confetti({
-        particleCount: 25,
-        spread: 60,
+        particleCount: 15,
+        spread: 50,
         origin: { y: 0.8 },
-        colors: ['#a855f7', '#10b981', '#06b6d4']
+        colors: ['#2e6f40', '#8f6036', '#4a6b5d']
       });
       onEffortSaved(45, 90);
     } catch (err: unknown) {
@@ -74,27 +74,27 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
 
   return (
     <div className="space-y-6">
-      <div className="bg-[#0d121b]/80 border border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md">
+      <div className="bg-[#161b19] border border-[#242d29] rounded-2xl p-5 sm:p-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20">
+            <h2 className="text-base font-bold text-[#f0f3f1] flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-[#251f30] text-[#c3b4de] border border-[#3e3252]">
                 <Mail className="w-4 h-4" />
               </span>
               The Procrastination Breaker (Dreaded Reply)
             </h2>
-            <p className="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
+            <p className="text-xs text-[#8e9c95] mt-1 max-w-2xl leading-relaxed">
               Have an email, Slack DM, or invite you've delayed answering for 2 weeks? Sloan writes an immaculate, guilt-free response so you can stop stressing.
             </p>
           </div>
 
           <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0">
-            <span className="text-[11px] text-slate-500 mr-1 hidden sm:inline">Try preset:</span>
+            <span className="text-[11px] text-[#73827b] mr-1 hidden sm:inline">Try preset:</span>
             {DREADED_PRESETS.map((p, i) => (
               <button
                 key={i}
                 onClick={() => setDreadedMsg(p.text)}
-                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-white/[0.08] transition-all cursor-pointer"
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-[#1c2320] hover:bg-[#232c28] text-[#a0ada6] border border-[#28332e] transition-colors cursor-pointer"
               >
                 {p.label}
               </button>
@@ -104,7 +104,7 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
 
         {/* Tone Selector */}
         <div className="mb-4">
-          <label className="block text-xs font-semibold text-slate-300 mb-2">
+          <label className="block text-xs font-semibold text-[#c7d1cc] mb-2">
             Pick your sloth defense strategy:
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -119,17 +119,17 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
                 <button
                   key={t.id}
                   onClick={() => setTone(t.id as typeof tone)}
-                  className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
+                  className={`p-3 rounded-xl border text-left transition-colors cursor-pointer ${
                     tone === t.id
-                      ? 'bg-purple-500/20 border-purple-500/50 text-white shadow-lg shadow-purple-950/40 ring-1 ring-purple-500/30'
-                      : 'bg-[#07090e]/70 border-white/[0.08] text-slate-400 hover:border-white/15 hover:text-slate-200'
+                      ? 'bg-[#251f30] border-[#4e3c66] text-[#f0f3f1]'
+                      : 'bg-[#1b221f] border-[#26312c] text-[#8e9c95] hover:border-[#33423b] hover:text-[#f0f3f1]'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-white mb-0.5">
-                    <Icon className="w-3.5 h-3.5 text-purple-400" />
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-[#f0f3f1] mb-0.5">
+                    <Icon className="w-3.5 h-3.5 text-[#c3b4de]" />
                     <span>{t.label}</span>
                   </div>
-                  <div className="text-[10px] text-slate-400 leading-snug">{t.desc}</div>
+                  <div className="text-[10px] text-[#8e9c95] leading-snug">{t.desc}</div>
                 </button>
               );
             })}
@@ -143,21 +143,21 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
             value={dreadedMsg}
             onChange={(e) => setDreadedMsg(e.target.value)}
             placeholder="Paste the dreaded message here..."
-            className="w-full bg-[#07090e]/85 border border-white/[0.08] rounded-xl p-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-purple-500/60 focus:ring-1 focus:ring-purple-500/30 transition-all font-mono leading-relaxed"
+            className="w-full bg-[#101413] border border-[#242d29] rounded-xl p-4 text-xs text-[#edf1ef] placeholder:text-[#525f58] focus:outline-none focus:border-[#483c5e] transition-colors font-mono leading-relaxed"
           />
         </div>
 
         {/* Action Button */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
-          <span className="text-xs text-slate-400 flex items-center gap-1.5">
-            <ZapOff className="w-3.5 h-3.5 text-purple-400" />
+          <span className="text-xs text-[#8e9c95] flex items-center gap-1.5">
+            <ZapOff className="w-3.5 h-3.5 text-[#c3b4de]" />
             Conserves ~45 mins of subconscious dread & rumination
           </span>
 
           <button
             onClick={handleDraft}
             disabled={loading || !dreadedMsg.trim()}
-            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-500 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-lg shadow-purple-950/60 disabled:opacity-50 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#483861] hover:bg-[#574475] text-white font-semibold text-xs border border-[#634e85] transition-colors disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
               <>
@@ -175,20 +175,20 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
       </div>
 
       {result && (
-        <div className="bg-[#0d121b]/90 border border-purple-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl animate-fade-in space-y-4">
-          <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
-            <span className="text-xs font-bold uppercase tracking-wider text-purple-400 flex items-center gap-1.5">
+        <div className="bg-[#161b19] border border-[#382d47] rounded-2xl p-5 sm:p-6 space-y-4">
+          <div className="flex items-center justify-between pb-3.5 border-b border-[#242d29]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#c3b4de] flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4" /> Guilt-Free Reply Ready to Send
             </span>
 
             <button
               onClick={copyReply}
-              className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-3.5 py-1.5 rounded-xl border border-white/[0.08] transition-all cursor-pointer"
+              className="flex items-center gap-1.5 text-xs text-[#a0ada6] hover:text-[#f0f3f1] bg-[#1c2320] hover:bg-[#232c28] px-3.5 py-1.5 rounded-xl border border-[#28332e] transition-colors cursor-pointer"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400 font-medium">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-[#55b376]" />
+                  <span className="text-[#9ed4b0] font-medium">Copied!</span>
                 </>
               ) : (
                 <>
@@ -199,13 +199,13 @@ export const DreadedReply: React.FC<DreadedReplyProps> = ({ currentProvider, onE
             </button>
           </div>
 
-          <div className="bg-[#07090e]/85 border border-white/[0.08] rounded-xl p-4 text-xs text-slate-200 font-mono leading-relaxed select-all">
+          <div className="bg-[#101413] border border-[#242d29] rounded-xl p-4 text-xs text-[#edf1ef] font-mono leading-relaxed select-all">
             {result.draftReply}
           </div>
 
-          <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-xs text-purple-200">
-            <strong className="block mb-0.5 text-purple-300 font-bold">Why this cures the procrastination:</strong>
-            <p className="leading-relaxed text-purple-100/90">{result.whyItRelievesStress}</p>
+          <div className="p-3.5 rounded-xl bg-[#251f30] border border-[#3e3252] text-xs text-[#c3b4de]">
+            <strong className="block mb-0.5 text-[#e1d9f0] font-bold">Why this cures the procrastination:</strong>
+            <p className="leading-relaxed text-[#c3b4de]">{result.whyItRelievesStress}</p>
           </div>
         </div>
       )}

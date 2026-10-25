@@ -2,175 +2,104 @@
 
 @layer base {
   :root {
-    --bg-canvas: #07090e;
-    --bg-surface: #0d121b;
-    --bg-surface-elevated: #131a26;
-    --bg-surface-hover: #172130;
+    --bg-canvas: #101413;
+    --bg-surface: #161b19;
+    --bg-card: #1c2320;
+    --bg-card-hover: #232c28;
+    --bg-inset: #0c0f0e;
     
-    --border-glass: rgba(255, 255, 255, 0.07);
-    --border-glass-hover: rgba(255, 255, 255, 0.14);
+    --border-subtle: #242d29;
+    --border-strong: #333f3a;
     
-    --accent-emerald: #10b981;
-    --accent-emerald-soft: rgba(16, 185, 129, 0.12);
-    --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+    --color-green: #2c633d;
+    --color-green-hover: #36784b;
+    --color-green-soft: #192d21;
+    --color-green-text: #a8dfba;
     
-    --accent-amber: #f59e0b;
-    --accent-amber-soft: rgba(245, 158, 11, 0.12);
+    --color-earth: #8f6036;
+    --color-earth-hover: #a87242;
+    --color-earth-soft: #2e2014;
+    --color-earth-text: #e6c8ab;
     
-    --accent-cyan: #06b6d4;
-    --accent-cyan-soft: rgba(6, 182, 212, 0.12);
+    --color-mist: #33423b;
+    --color-mist-soft: #17211d;
+    --color-mist-text: #a3c2b3;
     
-    --accent-indigo: #818cf8;
-    --accent-indigo-soft: rgba(129, 140, 248, 0.12);
+    --color-lavender: #4c466b;
+    --color-lavender-soft: #221f33;
+    --color-lavender-text: #c5bfeb;
 
-    --text-primary: #f8fafc;
-    --text-secondary: #cbd5e1;
-    --text-muted: #94a3b8;
-    --text-subdued: #64748b;
+    --text-main: #f0f3f1;
+    --text-muted: #a1ada7;
+    --text-faint: #6e7a74;
   }
 }
 
-/* Master Design Tokens & Utility Classes */
-.glass-panel {
-  background: rgba(13, 18, 27, 0.78);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.07), 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+/* Clean, Flat, Solid Natural UI Elements */
+.natural-panel {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
 }
 
-.glass-card {
-  background: rgba(19, 26, 38, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+.natural-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.glass-card:hover {
-  background: rgba(23, 33, 48, 0.75);
-  border-color: rgba(255, 255, 255, 0.12);
-  transform: translateY(-1px);
+.natural-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-strong);
 }
 
-.glass-card-interactive {
-  position: relative;
-  overflow: hidden;
+.natural-input {
+  background-color: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  transition: border-color 0.15s ease;
 }
 
-.glass-card-interactive::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+.natural-input:focus {
+  outline: none;
+  border-color: var(--color-green-text);
 }
 
-.glass-card-interactive:hover::after {
-  opacity: 1;
-}
-
-/* Serif Reading Mode for Bedtime Stories */
+/* Serif Reading Mode for Bedtime Stories - Natural Paper Feel */
 .font-serif-reading {
   font-family: 'Newsreader', Georgia, serif;
   font-feature-settings: "onum", "pnum";
 }
 
-/* Animations with Precision Timing */
-@keyframes sloth-breathe {
+/* Subtle, Quiet Animations (No Flashy Gimmicks) */
+@keyframes sloth-breathe-subtle {
   0%, 100% {
     transform: scale(1);
-    opacity: 0.9;
   }
   50% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
-}
-
-@keyframes branch-sway {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(1.2deg);
-  }
-}
-
-@keyframes firefly-float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-    opacity: 0.3;
-  }
-  33% {
-    transform: translateY(-8px) translateX(4px);
-    opacity: 0.8;
-  }
-  66% {
-    transform: translateY(-4px) translateX(-6px);
-    opacity: 0.4;
-  }
-}
-
-@keyframes audio-pulse {
-  0%, 100% {
-    height: 6px;
-    opacity: 0.4;
-  }
-  50% {
-    height: 28px;
-    opacity: 1;
+    transform: scale(1.04);
   }
 }
 
 .animate-sloth-breathe {
-  animation: sloth-breathe 6.5s ease-in-out infinite;
+  animation: sloth-breathe-subtle 6s ease-in-out infinite;
   transform-origin: center;
 }
 
-.animate-branch-sway {
-  animation: branch-sway 7s ease-in-out infinite;
-  transform-origin: top left;
-}
-
-.animate-firefly-1 {
-  animation: firefly-float 5s ease-in-out infinite;
-}
-
-.animate-firefly-2 {
-  animation: firefly-float 6.5s ease-in-out infinite 1.5s;
-}
-
-.animate-firefly-3 {
-  animation: firefly-float 4.2s ease-in-out infinite 0.7s;
-}
-
-/* Audio waveform bars */
-.audio-bar-1 { animation: audio-pulse 1.2s ease-in-out infinite; }
-.audio-bar-2 { animation: audio-pulse 0.9s ease-in-out infinite 0.2s; }
-.audio-bar-3 { animation: audio-pulse 1.4s ease-in-out infinite 0.4s; }
-.audio-bar-4 { animation: audio-pulse 0.8s ease-in-out infinite 0.1s; }
-.audio-bar-5 { animation: audio-pulse 1.1s ease-in-out infinite 0.3s; }
-
-/* Custom Sleek Scrollbar */
+/* Clean Flat Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #07090e;
+  background: #101413;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1c2635;
-  border-radius: 9999px;
+  background: #27322e;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2a3a50;
+  background: #394741;
 }
