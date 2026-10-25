@@ -146,3 +146,4 @@ Or connect this repository directly in your [Vercel Dashboard](https://vercel.co
 ## 📜 License
 
 MIT License. Copyright (c) 2026 Suraj Dhawal. Free and open-source forever.
+

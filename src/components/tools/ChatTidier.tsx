@@ -4,11 +4,11 @@ import {
   Sparkles, 
   Check, 
   Copy, 
-  AlertCircle, 
   Send, 
   ZapOff,
-  Flame,
-  CheckCircle2
+  CheckCircle2,
+  Clock,
+  ArrowRight
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { AIProvider, ChatTidierResult } from '../../types';
@@ -22,7 +22,7 @@ interface ChatTidierProps {
 
 const PRESETS = [
   {
-    name: 'Family Group Chat (Sunday Chaos)',
+    name: 'Family Chat (Sunday Chaos)',
     content: `Mom (10:14 PM): Did everyone remember Aunt Brenda's birthday dinner on Wednesday?
 Dave (10:16 PM): Wait I thought it was Thursday at 7??
 Mom (10:18 PM): No Wednesday! Dave please check your calendar.
@@ -35,7 +35,7 @@ Dave (10:41 PM): Haha classic Dad
 Mom (10:45 PM): Suraj are you coming to dinner? Let me know by tomorrow so I can reserve the table!`
   },
   {
-    name: 'Work Project Thread (Standup Noise)',
+    name: 'Work Standup (PR Thread Noise)',
     content: `Alex (9:02 AM): Morning team! Just merged the auth refactor branch.
 Maya (9:05 AM): Looks like the CI pipeline on staging failed on unit tests.
 Alex (9:07 AM): Looking into it now, seems like a jest mock issue.
@@ -56,7 +56,7 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
   const handleTidy = async () => {
     if (!inputText.trim()) return;
     setLoading(true);
-    setProgressMsg('Waking up Sloan to read unread clutter...');
+    setProgressMsg('Waking up Sloan to read unread chatter...');
     setResult(null);
 
     try {
@@ -66,8 +66,8 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
       setResult(res);
       soundEngine.playGentleChime();
       confetti({
-        particleCount: 30,
-        spread: 70,
+        particleCount: 25,
+        spread: 60,
         origin: { y: 0.8 },
         colors: ['#10b981', '#34d399', '#f59e0b']
       });
@@ -87,26 +87,28 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
 
   return (
     <div className="space-y-6">
-      {/* Top Banner */}
-      <div className="bg-slate-900/80 border border-white/10 rounded-2xl p-5">
+      {/* Top Banner & Input */}
+      <div className="bg-[#0d121b]/80 border border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-emerald-400" />
+            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <MessageSquare className="w-4 h-4" />
+              </span>
               Chaos to 2-Line Clarity (Chat & Inbox Tidier)
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
-              Dump dozens of unread messages from family or work. The open-weight model distills the 5% that actually matters and drafts polite 1-click replies.
+            <p className="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
+              Dump dozens of unread messages from noisy group chats or emails. The open-weight model distills the 5% that actually matters and drafts polite 1-click replies.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 self-end sm:self-auto">
-            <span className="text-[11px] text-slate-400 mr-1 hidden sm:inline">Try preset:</span>
+          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0">
+            <span className="text-[11px] text-slate-500 mr-1 hidden sm:inline">Try preset:</span>
             {PRESETS.map((p, idx) => (
               <button
                 key={idx}
                 onClick={() => setInputText(p.content)}
-                className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/5 transition-all"
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-white/[0.08] transition-all cursor-pointer"
               >
                 Preset {idx + 1}
               </button>
@@ -115,21 +117,21 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
         </div>
 
         {/* Input Area */}
-        <div className="relative mb-3">
+        <div className="relative mb-3.5">
           <textarea
             rows={7}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Paste raw unread chat, Slack thread, Discord logs, or email messages here..."
-            className="w-full bg-slate-950/90 border border-white/10 rounded-xl p-3.5 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500/60 transition-all font-mono"
+            className="w-full bg-[#07090e]/85 border border-white/[0.08] rounded-xl p-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-emerald-500/60 focus:ring-1 focus:ring-emerald-500/30 transition-all font-mono leading-relaxed"
           />
-          <div className="absolute bottom-3 right-3 text-[11px] text-slate-500">
-            {inputText.length} characters
+          <div className="absolute bottom-3 right-3 text-[10px] font-mono text-slate-500 bg-[#07090e]/80 px-2 py-0.5 rounded border border-white/5">
+            {inputText.length} chars
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className="flex items-center justify-between">
+        {/* Action Button & Telemetry */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
           <span className="text-xs text-slate-400 flex items-center gap-1.5">
             <ZapOff className="w-3.5 h-3.5 text-emerald-400" />
             Conserves ~25 mins of screen scrolling fatigue
@@ -138,7 +140,7 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
           <button
             onClick={handleTidy}
             disabled={loading || !inputText.trim()}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-xs transition-all shadow-lg shadow-emerald-950/50 disabled:opacity-50 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold text-xs transition-all shadow-lg shadow-emerald-950/60 disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
               <>
@@ -157,13 +159,13 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
 
       {/* Results View */}
       {result && (
-        <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl p-5 shadow-2xl animate-fade-in space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
+        <div className="bg-[#0d121b]/90 border border-emerald-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl animate-fade-in space-y-5">
+          <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
+            <div className="flex items-center gap-2.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
                 🦥 Sloan's Executive Brief
               </span>
-              <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border ${
+              <span className={`text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${
                 result.urgencyLevel === 'One Quick Action Needed'
                   ? 'bg-rose-500/15 border-rose-500/30 text-rose-300'
                   : result.urgencyLevel === 'Low Effort'
@@ -174,32 +176,33 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
               </span>
             </div>
 
-            <span className="text-xs text-slate-400 font-medium">
-              Effort saved: <strong className="text-emerald-400">25m</strong>
+            <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
+              <Clock className="w-3.5 h-3.5 text-emerald-400" />
+              Effort saved: <strong className="text-emerald-400 font-bold">25m</strong>
             </span>
           </div>
 
-          {/* 2-Line Brief Callout */}
-          <div className="bg-emerald-950/30 border border-emerald-500/20 rounded-xl p-4 text-sm text-emerald-100 font-medium leading-relaxed">
+          {/* 2-Line Brief Callout with vertical accent border */}
+          <div className="bg-emerald-950/25 border-l-4 border-emerald-400 border-r border-t border-b border-emerald-500/20 rounded-xl p-4 text-sm text-emerald-100 font-medium leading-relaxed shadow-inner">
             {result.twoLineBrief}
           </div>
 
           {/* Quick 1-Click Replies */}
           <div>
-            <h4 className="text-xs font-semibold text-slate-300 mb-2 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
               <Send className="w-3.5 h-3.5 text-emerald-400" />
-              Zero-Brainpower 1-Click Replies (Copy & Send):
+              Zero-Brainpower 1-Click Replies (Click to Copy):
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
               {result.suggestedReplies.map((reply, idx) => (
                 <div
                   key={idx}
                   onClick={() => copyReply(reply, idx)}
-                  className="group relative cursor-pointer bg-slate-950/70 border border-white/10 hover:border-emerald-500/40 rounded-xl p-3 text-xs text-slate-200 transition-all flex items-center justify-between gap-2"
+                  className="group relative cursor-pointer bg-[#07090e]/80 border border-white/[0.08] hover:border-emerald-500/50 rounded-xl p-3.5 text-xs text-slate-200 transition-all flex items-center justify-between gap-2 shadow-sm hover:shadow-emerald-950/30"
                 >
-                  <span className="italic">"{reply}"</span>
+                  <span className="italic font-sans">"{reply}"</span>
                   <button
-                    className="p-1 rounded bg-slate-800 text-slate-400 group-hover:text-emerald-300 shrink-0"
+                    className="p-1.5 rounded-lg bg-slate-800/80 text-slate-400 group-hover:text-emerald-300 shrink-0 transition-colors"
                     title="Copy to clipboard"
                   >
                     {copiedIndex === idx ? (
@@ -215,16 +218,16 @@ export const ChatTidier: React.FC<ChatTidierProps> = ({ currentProvider, onEffor
 
           {/* Extracted Tasks (If any) */}
           {result.extractedTasks && result.extractedTasks.length > 0 && (
-            <div className="pt-2">
-              <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+            <div className="pt-2 border-t border-white/[0.06]">
+              <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2.5 flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-teal-400" />
                 What's Actually on You:
               </h4>
-              <ul className="space-y-1.5 text-xs text-slate-300">
+              <ul className="space-y-2 text-xs text-slate-300">
                 {result.extractedTasks.map((t, i) => (
-                  <li key={i} className="flex items-center gap-2 bg-slate-950/40 px-3 py-1.5 rounded-lg border border-white/5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span>{t}</span>
+                  <li key={i} className="flex items-center gap-2.5 bg-[#07090e]/60 px-3.5 py-2 rounded-xl border border-white/5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                    <span className="font-medium">{t}</span>
                   </li>
                 ))}
               </ul>

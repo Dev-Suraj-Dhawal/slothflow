@@ -67,3 +67,4 @@ export interface InferenceState {
   modelName: string;
   durationMs?: number;
 }
+

@@ -8,7 +8,8 @@ import {
   ListChecks, 
   ShoppingCart, 
   BrainCircuit, 
-  ZapOff 
+  ZapOff,
+  Radio
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { AIProvider, VoiceRambleResult } from '../../types';
@@ -22,11 +23,11 @@ interface VoiceRambleProps {
 
 const VOICE_PRESETS = [
   {
-    label: 'Half-Asleep Grocery Mumble',
+    label: 'Morning Grocery Mumble',
     text: `Uhh so we definitely ran out of oat milk this morning, and the coffee beans are basically dust in the grinder... oh and also eggs if they have the brown ones, plus some sourdough bread and maybe some dark chocolate if I deserve a treat, and paper towels because the kitchen counter is a disaster.`
   },
   {
-    label: 'Lazy Bedside Work Ramble',
+    label: 'Bedside Work Thoughts',
     text: `Need to remember tomorrow morning to tell Alex that the pull request is fine to ship, but check the database migration first... oh and reschedule that 2pm sync with marketing because I want to take a nap, and reply to client email about the launch date.`
   }
 ];
@@ -123,25 +124,27 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
 
   return (
     <div className="space-y-6">
-      <div className="bg-slate-900/80 border border-white/10 rounded-2xl p-5">
+      <div className="bg-[#0d121b]/80 border border-white/[0.08] rounded-2xl p-5 sm:p-6 shadow-xl backdrop-blur-md">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
           <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Mic className="w-5 h-5 text-cyan-400" />
+            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <span className="p-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <Mic className="w-4 h-4" />
+              </span>
               Lazy Voice Ramble to Clean Roadmap
             </h2>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
               Speak or mumble while lying down. The open model extracts clean groceries, action items, or notes without requiring you to organize anything.
             </p>
           </div>
 
-          <div className="flex items-center gap-1.5 self-end sm:self-auto">
-            <span className="text-[11px] text-slate-400 mr-1 hidden sm:inline">Try preset:</span>
+          <div className="flex items-center gap-1.5 self-end sm:self-auto shrink-0">
+            <span className="text-[11px] text-slate-500 mr-1 hidden sm:inline">Try preset:</span>
             {VOICE_PRESETS.map((p, i) => (
               <button
                 key={i}
                 onClick={() => setTranscript(p.text)}
-                className="text-[11px] font-medium px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 border border-white/5 transition-all"
+                className="text-[11px] font-semibold px-2.5 py-1 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 border border-white/[0.08] transition-all cursor-pointer"
               >
                 {p.label}
               </button>
@@ -150,39 +153,52 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
         </div>
 
         {/* Text / Speech Area */}
-        <div className="relative mb-3">
+        <div className="relative mb-3.5">
           <textarea
             rows={5}
             value={transcript}
             onChange={(e) => setTranscript(e.target.value)}
             placeholder="Click the microphone and speak lazily, or type your incoherent thoughts..."
-            className="w-full bg-slate-950/90 border border-white/10 rounded-xl p-3.5 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/60 transition-all font-mono"
+            className="w-full bg-[#07090e]/85 border border-white/[0.08] rounded-xl p-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/30 transition-all font-mono leading-relaxed"
           />
 
-          <button
-            onClick={toggleRecording}
-            className={`absolute bottom-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
-              isRecording
-                ? 'bg-rose-500 text-white border-rose-400 animate-pulse'
-                : 'bg-slate-800 text-slate-300 border-white/10 hover:text-white hover:bg-slate-700'
-            }`}
-          >
-            {isRecording ? (
-              <>
-                <MicOff className="w-3.5 h-3.5" />
-                <span>Stop Listening</span>
-              </>
-            ) : (
-              <>
-                <Mic className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Record Voice</span>
-              </>
+          <div className="absolute bottom-3 right-3 flex items-center gap-2">
+            {/* Visualizer bars when recording */}
+            {isRecording && (
+              <div className="flex items-center gap-1 px-2.5 py-1 bg-slate-900/90 rounded-lg border border-rose-500/30">
+                <span className="w-1.5 h-3 bg-rose-400 rounded-full audio-bar-1" />
+                <span className="w-1.5 h-5 bg-rose-400 rounded-full audio-bar-2" />
+                <span className="w-1.5 h-2 bg-rose-400 rounded-full audio-bar-3" />
+                <span className="w-1.5 h-6 bg-rose-400 rounded-full audio-bar-4" />
+                <span className="w-1.5 h-3 bg-rose-400 rounded-full audio-bar-5" />
+              </div>
             )}
-          </button>
+
+            <button
+              onClick={toggleRecording}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all cursor-pointer ${
+                isRecording
+                  ? 'bg-rose-500 text-white border-rose-400 shadow-lg shadow-rose-950/50'
+                  : 'bg-slate-900 text-slate-300 border-white/[0.08] hover:text-white hover:bg-slate-800'
+              }`}
+            >
+              {isRecording ? (
+                <>
+                  <MicOff className="w-3.5 h-3.5" />
+                  <span>Stop Listening</span>
+                </>
+              ) : (
+                <>
+                  <Mic className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Record Voice</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Action Button */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-1">
           <span className="text-xs text-slate-400 flex items-center gap-1.5">
             <ZapOff className="w-3.5 h-3.5 text-cyan-400" />
             Zero friction note taking for exhausted brains
@@ -191,7 +207,7 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
           <button
             onClick={handleProcess}
             disabled={loading || !transcript.trim()}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-semibold text-xs transition-all shadow-lg shadow-cyan-950/50 disabled:opacity-50 cursor-pointer"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 via-teal-600 to-cyan-500 hover:from-cyan-500 hover:to-teal-500 text-white font-semibold text-xs transition-all shadow-lg shadow-cyan-950/60 disabled:opacity-50 cursor-pointer"
           >
             {loading ? (
               <>
@@ -210,8 +226,8 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
 
       {/* Result Display */}
       {result && (
-        <div className="bg-slate-900 border border-cyan-500/30 rounded-2xl p-5 shadow-2xl animate-fade-in space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="bg-[#0d121b]/90 border border-cyan-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl animate-fade-in space-y-4">
+          <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
                 {result.category === 'Groceries' ? (
@@ -225,12 +241,12 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
 
             <button
               onClick={copyBullets}
-              className="flex items-center gap-1 text-xs text-slate-300 hover:text-white bg-slate-800 px-2.5 py-1 rounded-lg border border-white/10"
+              className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-slate-900 hover:bg-slate-800 px-3 py-1.5 rounded-xl border border-white/[0.08] transition-all cursor-pointer"
             >
               {copied ? (
                 <>
                   <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Copied!</span>
+                  <span className="text-emerald-400 font-medium">Copied!</span>
                 </>
               ) : (
                 <>
@@ -241,17 +257,17 @@ export const VoiceRamble: React.FC<VoiceRambleProps> = ({ currentProvider, onEff
             </button>
           </div>
 
-          <div className="text-xs text-slate-400 italic">
-            Core intent: <strong className="text-slate-200">{result.cleansedIntent}</strong>
+          <div className="text-xs text-slate-400 italic bg-[#07090e]/60 px-4 py-2.5 rounded-xl border border-white/5">
+            Core intent: <strong className="text-slate-200 not-italic font-medium">{result.cleansedIntent}</strong>
           </div>
 
-          <div className="space-y-2">
+          <div className="space-y-2 pt-1">
             {result.bulletItems.map((item, idx) => (
               <div 
                 key={idx}
-                className="flex items-center gap-3 bg-slate-950/60 border border-white/5 rounded-xl px-4 py-2.5 text-xs text-slate-200"
+                className="flex items-center gap-3 bg-[#07090e]/70 border border-white/[0.06] rounded-xl px-4 py-3 text-xs text-slate-200 shadow-sm"
               >
-                <span className="w-2 h-2 rounded-full bg-cyan-400" />
+                <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
                 <span className="font-medium">{item.replace(/^•\s*/, '')}</span>
               </div>
             ))}
